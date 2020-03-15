@@ -38,7 +38,6 @@
             if (seconds > 0)
             {
                 _mediaFile.VideoLength = seconds;
-                _mediaFile.HasChanged = true;
 
                 return;
             }
@@ -55,7 +54,6 @@
             if (fi.Exists && _mediaFile.CreationTime != creationTime)
             {
                 _mediaFile.CreationTime = creationTime;
-                _mediaFile.HasChanged = true;
 
                 return false;
             }
