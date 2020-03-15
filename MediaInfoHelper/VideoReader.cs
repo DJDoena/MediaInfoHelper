@@ -15,11 +15,11 @@
             _manualInput = manualInput;
         }
 
-        public bool DetermineLength()
+        public void DetermineLength()
         {
             if (VideoLengthIsValid())
             {
-                return false;
+                return;
             }
 
             uint seconds = 0;
@@ -38,11 +38,12 @@
             if (seconds > 0)
             {
                 _mediaFile.VideoLength = seconds;
+                _mediaFile.HasChanged = true;
 
-                return true;
+                return;
             }
 
-            return false;
+            return;
         }
 
         private bool VideoLengthIsValid()
@@ -54,11 +55,14 @@
             if (fi.Exists && _mediaFile.CreationTime != creationTime)
             {
                 _mediaFile.CreationTime = creationTime;
+                _mediaFile.HasChanged = true;
 
                 return false;
             }
 
-            return _mediaFile.VideoLengthSpecified;
+            var isValid = _mediaFile.VideoLengthSpecified;
+
+            return isValid;
         }
 
         private uint GetUserInput()

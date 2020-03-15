@@ -12,11 +12,14 @@ namespace DoenaSoft.MediaInfoHelper
 
         public bool VideoLengthSpecified => VideoLength > 0;
 
+        public bool HasChanged { get; set; }
+
         public MediaFileData(string fileName, DateTime creationTime, uint videoLength)
         {
             FileName = fileName;
             CreationTime = creationTime;
             VideoLength = videoLength;
+            HasChanged = false;
         }
     }
 }
