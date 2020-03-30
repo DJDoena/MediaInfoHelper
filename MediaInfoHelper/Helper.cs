@@ -47,7 +47,7 @@
             return result;
         }
 
-        private static (uint days, uint hours, uint minutes) GetTimeParts(uint totalSeconds)
+        public static (uint days, uint hours, uint minutes) GetTimeParts(uint totalSeconds)
         {
             var timeSpan = TimeSpan.FromSeconds(totalSeconds);
 
