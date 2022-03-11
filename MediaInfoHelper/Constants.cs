@@ -9,5 +9,9 @@
         public const string YoutubeFileExtensionName = "yt";
 
         public const string YoutubeFileExtension = "." + YoutubeFileExtensionName;
+
+        public const string ManualFileExtensionName = "man";
+
+        public const string ManualFileExtension = "." + ManualFileExtensionName;
     }
 }

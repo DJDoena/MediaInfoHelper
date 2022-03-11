@@ -1,5 +1,6 @@
 ﻿namespace DoenaSoft.MediaInfoHelper
 {
+    using System;
     using System.IO;
     using FF = FFProbe;
 
@@ -17,22 +18,24 @@
 
         public void DetermineLength()
         {
-            if (VideoLengthIsValid())
+            if (this.VideoLengthIsValid())
             {
                 return;
             }
 
             uint seconds = 0;
 
-            if (_mediaFile.FileName.EndsWith(Constants.DvdProfilerFileExtension) || _mediaFile.FileName.EndsWith(Constants.YoutubeFileExtension))
+            if (_mediaFile.FileName.EndsWith(Constants.DvdProfilerFileExtension)
+                || _mediaFile.FileName.EndsWith(Constants.YoutubeFileExtension)
+                || _mediaFile.FileName.EndsWith(Constants.ManualFileExtension))
             {
                 seconds = _mediaFile.VideoLengthSpecified
                    ? _mediaFile.VideoLength
-                   : GetUserInput();
+                   : this.GetUserInput();
             }
             else if (File.Exists(_mediaFile.FileName))
             {
-                seconds = GetLengthFromFile();
+                seconds = this.GetLengthFromFile();
             }
 
             if (seconds > 0)
@@ -49,7 +52,17 @@
         {
             var fi = new FileInfo(_mediaFile.FileName);
 
-            var creationTime = fi.CreationTimeUtc.Conform();
+            DateTime creationTime;
+            if (_mediaFile.FileName.EndsWith(Constants.DvdProfilerFileExtension)
+                || _mediaFile.FileName.EndsWith(Constants.YoutubeFileExtension)
+                || _mediaFile.FileName.EndsWith(Constants.ManualFileExtension))
+            {
+                creationTime = _mediaFile.CreationTime;
+            }
+            else
+            {
+                creationTime = fi.CreationTimeUtc.Conform();
+            }
 
             if (fi.Exists && _mediaFile.CreationTime != creationTime)
             {
@@ -80,14 +93,14 @@
 
         private uint GetLengthFromFile()
         {
-            var videoLength = GetLengthFromMeta();
+            var videoLength = this.GetLengthFromMeta();
 
             if (videoLength > 0)
             {
                 return videoLength;
             }
 
-            videoLength = GetDuration();
+            videoLength = this.GetDuration();
 
             return videoLength;
         }
@@ -113,7 +126,7 @@
 
         private uint GetDuration()
         {
-            var mediaInfo = GetMediaInfo();
+            var mediaInfo = this.GetMediaInfo();
 
             if (mediaInfo != null)
             {
