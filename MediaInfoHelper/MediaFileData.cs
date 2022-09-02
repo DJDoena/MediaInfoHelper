@@ -18,7 +18,8 @@ namespace DoenaSoft.MediaInfoHelper
                 if (_creationTime != value)
                 {
                     _creationTime = value;
-                    HasChanged = true;
+
+                    this.HasChanged = true;
                 }
             }
         }
@@ -31,21 +32,22 @@ namespace DoenaSoft.MediaInfoHelper
                 if (_videoLength != value)
                 {
                     _videoLength = value;
-                    HasChanged = true;
+
+                    this.HasChanged = true;
                 }
             }
         }
 
-        public bool VideoLengthSpecified => VideoLength > 0;
+        public bool VideoLengthSpecified => this.VideoLength > 0;
 
         public bool HasChanged { get; private set; }
 
         public MediaFileData(string fileName, DateTime creationTime, uint videoLength)
         {
-            FileName = fileName;
-            CreationTime = creationTime;
-            VideoLength = videoLength;
-            HasChanged = false;
+            this.FileName = fileName;
+            this.CreationTime = creationTime;
+            this.VideoLength = videoLength;
+            this.HasChanged = false;
         }
     }
 }

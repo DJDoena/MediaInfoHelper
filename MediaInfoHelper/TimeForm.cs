@@ -10,27 +10,27 @@
 
         public TimeForm(string fileName)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            Text = (new FileInfo(fileName)).Name;
+            this.Text = (new FileInfo(fileName)).Name;
         }
 
         private void OnAcceptButtonClicked(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private void OnSecondsTextBoxTextChanged(object sender, EventArgs e)
         {
             try
             {
-                TrySetTime();
+                this.TrySetTime();
             }
             catch
             {
                 TimeTextBox.Text = string.Empty;
 
-                Time = 0;
+                this.Time = 0;
             }
         }
 
@@ -42,7 +42,7 @@
 
             uint.TryParse(TimeTextBox.Text, out uint time);
 
-            Time = time;
+            this.Time = time;
         }
 
         private static string GetSeconds(string text)

@@ -8,6 +8,10 @@
     {
         public string Title;
 
+        public DateTime PurchaseDate;
+
+        public bool PurchaseDateSpecified;
+
         public Event[] Watches;
     }
 
