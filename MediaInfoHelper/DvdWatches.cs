@@ -10,6 +10,7 @@
 
         public DateTime PurchaseDate;
 
+        [XmlIgnore]
         public bool PurchaseDateSpecified;
 
         public Event[] Watches;
