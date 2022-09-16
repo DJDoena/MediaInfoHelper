@@ -123,5 +123,8 @@
 
     [DebuggerDisplay("Language: {Language}")]
     public sealed class Subtitle : StreamBase
-    { }
+    {
+        [XmlAttribute]
+        public string SubtitleFile;
+    }
 }

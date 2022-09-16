@@ -17,8 +17,7 @@
             _cultureInfo = CultureInfo.GetCultureInfo("en-US");
         }
 
-        public static string GetLanguage(this IEnumerable<FF.Tag> tags)
-            => tags?.FirstOrDefault(tag => tag.key == "language")?.value ?? _originalLanguage;
+        public static string GetLanguage(this IEnumerable<FF.Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "language")?.value ?? _originalLanguage;
 
         public static VideoInfo Convert(FF.FFProbe ffprobe, string originalLanguage)
         {
@@ -43,7 +42,7 @@
                 Duration = ConvertDuration(ffprobe.format?.duration),
                 Video = ffprobe.streams?.Where(IsVideo).Select(GetXmlVideo).ToArray(),
                 Audio = ffprobe.streams?.Where(IsAudio).Select(GetXmlAudio).ToArray(),
-                Subtitle = ffprobe.streams?.Where(IsSubtile).Select(GetXmlSubtitle).ToArray(),
+                Subtitle = ffprobe.streams?.Where(IsSubtile).Select(s => GetXmlSubtitle(s, ffprobe.FileName)).ToArray(),
             };
 
             info.DurationSpecified = info.Duration > 0;
@@ -66,45 +65,40 @@
             return info;
         }
 
-        private static bool IsSubtile(FF.Stream stream)
-            => stream?.codec_type == "subtitle";
+        private static bool IsSubtile(FF.Stream stream) => stream?.codec_type == "subtitle";
 
-        private static Subtitle GetXmlSubtitle(FF.Stream stream)
-            => new Subtitle()
-            {
-                CodecName = stream.codec_name,
-                CodecLongName = stream.codec_long_name,
-                Language = stream.tag.GetLanguage(),
-                Title = stream.tag.GetTitle()
-            };
+        private static Subtitle GetXmlSubtitle(FF.Stream stream, string fileName) => new Subtitle()
+        {
+            CodecName = stream.codec_name,
+            CodecLongName = stream.codec_long_name,
+            Language = stream.tag.GetLanguage(),
+            Title = stream.tag.GetTitle(),
+            SubtitleFile = fileName,
+        };
 
-        private static bool IsAudio(FF.Stream stream)
-            => stream?.codec_type == "audio";
+        private static bool IsAudio(FF.Stream stream) => stream?.codec_type == "audio";
 
-        private static Audio GetXmlAudio(FF.Stream stream)
-            => new Audio()
-            {
-                CodecName = stream.codec_name,
-                CodecLongName = stream.codec_long_name,
-                SampleRate = stream.sample_rate,
-                Channels = stream.channels,
-                ChannelLayout = stream.channel_layout,
-                Language = stream.tag.GetLanguage(),
-                Title = stream.tag.GetTitle(),
-            };
+        private static Audio GetXmlAudio(FF.Stream stream) => new Audio()
+        {
+            CodecName = stream.codec_name,
+            CodecLongName = stream.codec_long_name,
+            SampleRate = stream.sample_rate,
+            Channels = stream.channels,
+            ChannelLayout = stream.channel_layout,
+            Language = stream.tag.GetLanguage(),
+            Title = stream.tag.GetTitle(),
+        };
 
-        private static bool IsVideo(FF.Stream stream)
-            => stream?.codec_type == "video";
+        private static bool IsVideo(FF.Stream stream) => stream?.codec_type == "video";
 
-        private static Video GetXmlVideo(FF.Stream stream)
-            => new Video()
-            {
-                CodecName = stream.codec_name,
-                CodecLongName = stream.codec_long_name,
-                AspectRatio = GetAspectRatio(stream),
-                Language = stream.tag.GetLanguage(),
-                Title = stream.tag.GetTitle(),
-            };
+        private static Video GetXmlVideo(FF.Stream stream) => new Video()
+        {
+            CodecName = stream.codec_name,
+            CodecLongName = stream.codec_long_name,
+            AspectRatio = GetAspectRatio(stream),
+            Language = stream.tag.GetLanguage(),
+            Title = stream.tag.GetTitle(),
+        };
 
         private static AspectRatio GetAspectRatio(FF.Stream stream)
         {
@@ -171,8 +165,7 @@
             return 0;
         }
 
-        private static decimal CalulateRatio(decimal width, decimal height)
-            => Math.Round(width / height, 2, MidpointRounding.AwayFromZero);
+        private static decimal CalulateRatio(decimal width, decimal height) => Math.Round(width / height, 2, MidpointRounding.AwayFromZero);
 
         private static bool TryParseTimeSpan(string duration, out TimeSpan timeSpan)
         {
@@ -185,10 +178,8 @@
             return success;
         }
 
-        private static bool TryParseDouble(string duration, out double seconds)
-            => double.TryParse(duration, NumberStyles.AllowDecimalPoint, _cultureInfo, out seconds);
+        private static bool TryParseDouble(string duration, out double seconds) => double.TryParse(duration, NumberStyles.AllowDecimalPoint, _cultureInfo, out seconds);
 
-        private static string GetTitle(this IEnumerable<FF.Tag> tags)
-            => tags?.FirstOrDefault(tag => tag.key == "title")?.value;
+        private static string GetTitle(this IEnumerable<FF.Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "title")?.value;
     }
 }
