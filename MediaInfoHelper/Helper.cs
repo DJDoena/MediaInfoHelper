@@ -150,7 +150,7 @@
 
             var result = subtitleFiles
                 .Select(TryGetIdxSubSubtitleMediaInfo)
-                .Where(ff => ff != null);
+                .Where(ff => ff?.streams?.Length > 0);
 
             return result;
         }
@@ -181,7 +181,7 @@
 
             var result = subtitleFiles
                 .Select(sf => TryGetSrtSubtitleMediaInfo(sf, baseName))
-                .Where(ff => ff != null);
+                .Where(ff => ff?.streams?.Length > 0);
 
             return result;
         }
@@ -242,23 +242,5 @@
                 },
             },
         };
-
-        //private static DS.FFProbe GetMediaInfo(FileInfo fileInfo)
-        //{
-        //    try
-        //    {
-        //        var mediaInfo = (new NR.FFProbe()).GetMediaInfo(fileInfo.FullName);
-
-        //        var xml = mediaInfo.Result.CreateNavigator().OuterXml;
-
-        //        var ffprobe = Serializer<DS.FFProbe>.FromString(xml);
-
-        //        return ffprobe;
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
     }
 }
