@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>DoenaSoft.MediaInfoHelper</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>DoenaSoft.MediaInfoHelper</title>
     <authors>DJ Doena</authors>
     <icon>images\djdsoft.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/DJDoena/DoenaSoft.ToolBox</projectUrl>
+    <projectUrl>https://github.com/DJDoena/MediaInfoHelper</projectUrl>
     <description>Library to query video files for their meta information</description>
     <copyright>2019 - 2022</copyright>
     <tags>ffprobe, video-files</tags>
