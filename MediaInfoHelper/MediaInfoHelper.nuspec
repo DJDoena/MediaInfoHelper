@@ -4,7 +4,7 @@
     <id>DoenaSoft.MediaInfoHelper</id>
     <version>1.0.1</version>
     <title>DoenaSoft.MediaInfoHelper</title>
-    <authors>DJ Doena.</authors>
+    <authors>DJ Doena</authors>
     <icon>images\djdsoft.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
