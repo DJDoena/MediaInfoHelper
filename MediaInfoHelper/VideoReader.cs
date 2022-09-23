@@ -4,18 +4,27 @@
     using System.IO;
     using FF = FFProbe;
 
+    /// <summary>
+    /// Class to read out the basic information about a media file.
+    /// </summary>
     public sealed class VideoReader
     {
         private readonly bool _manualInput;
 
         private readonly MediaFileData _mediaFile;
 
+        /// <summary />
+        /// <param name="mediaFile">the media file</param>
+        /// <param name="manualInput">whether or not the user shall be shown an input form for the video length if it cannot be determined automatically</param>
         public VideoReader(MediaFileData mediaFile, bool manualInput)
         {
             _mediaFile = mediaFile;
             _manualInput = manualInput;
         }
 
+        /// <summary>
+        /// Calculates the running time of a media file.
+        /// </summary>
         public void DetermineLength()
         {
             if (this.VideoLengthIsValid())

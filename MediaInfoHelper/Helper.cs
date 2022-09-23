@@ -8,8 +8,14 @@
     using DS = FFProbe;
     using NR = NReco.VideoInfo;
 
+    /// <summary>
+    /// Helper functions to deal with this library.
+    /// </summary>
     public static class Helper
     {
+        /// <summary>
+        /// Formats a time in seconds into a HH:mm:ss format.
+        /// </summary>
         public static string FormatTime(uint totalSeconds)
         {
             var (days, hours, minutes) = GetTimeParts(totalSeconds);
@@ -34,6 +40,9 @@
             return text.ToString();
         }
 
+        /// <summary>
+        /// Adds up a number of <see cref="uint"/> values.
+        /// </summary>
         public static uint Sum(this IEnumerable<uint> source)
         {
             if (source == null)
@@ -51,6 +60,10 @@
             return result;
         }
 
+        /// <summary>
+        /// Returns days, hours and minutes of a given time in seconds.
+        /// </summary>
+        /// <remarks>when the remaining seconds are more or equal to 30, the  part gets rounded to the next whole number</remarks>
         public static (uint days, uint hours, uint minutes) GetTimeParts(uint totalSeconds)
         {
             var timeSpan = TimeSpan.FromSeconds(totalSeconds);
@@ -90,6 +103,9 @@
             return (days, hours, minutes);
         }
 
+        /// <summary>
+        /// Reads out the video meta information of a video or subtitle file.
+        /// </summary>
         public static DS.FFProbe TryGetMediaInfo(FileInfo fileInfo, out List<DS.FFProbe> additionalSubtitleMediaInfos)
         {
             try

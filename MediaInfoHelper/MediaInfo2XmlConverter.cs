@@ -6,6 +6,9 @@
     using System.Linq;
     using FF = FFProbe;
 
+    /// <summary>
+    /// Converts an <see cref="FF.FFProbe"/> instance into an <see cref="VideoInfo"/> instance.
+    /// </summary>
     public static class MediaInfo2XmlConverter
     {
         private static readonly CultureInfo _cultureInfo;
@@ -17,8 +20,14 @@
             _cultureInfo = CultureInfo.GetCultureInfo("en-US");
         }
 
+        /// <summary>
+        /// Return the language property of a stream, if exists, otherwise the original language of the stream.
+        /// </summary>
         public static string GetLanguage(this IEnumerable<FF.Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "language")?.value ?? _originalLanguage;
 
+        /// <summary>
+        /// Converts an <see cref="FF.FFProbe"/> instance into an <see cref="VideoInfo"/> instance.
+        /// </summary>
         public static VideoInfo Convert(FF.FFProbe ffprobe, string originalLanguage)
         {
             _originalLanguage = originalLanguage;
