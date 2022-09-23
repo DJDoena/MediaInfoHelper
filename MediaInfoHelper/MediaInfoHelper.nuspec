@@ -9,9 +9,9 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<license type="expression">MIT</license>
 		<projectUrl>https://github.com/DJDoena/DoenaSoft.ToolBox</projectUrl>
-		<description>Gives an interface layer for file I/O as well as Windows Forms / WPF UI components for mocking and unit-testing</description>
+		<description>Library to query video files for their meta information</description>
 		<copyright>2019 - 2022</copyright>
-		<tags>unit-testing, I/O, Forms, WPF</tags>
+		<tags>ffprobe, video-files</tags>
 	</metadata>
 	<files>
 		<file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.dll" target="lib\net452\DoenaSoft.MediaInfoHelper.dll" />
