@@ -12,14 +12,14 @@
 		<description>Library to query video files for their meta information</description>
 		<copyright>2019 - 2022</copyright>
 		<tags>ffprobe, video-files</tags>
+		<dependencies>
+			<dependency id="NReco.VideoInfo" version="1.1.1" />
+			<dependency id="System.ValueTuple" version="4.5.0" />
+		</dependencies>
 	</metadata>
 	<files>
 		<file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.dll" target="lib\net452\DoenaSoft.MediaInfoHelper.dll" />
 		<file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.xml" target="lib\net452\DoenaSoft.MediaInfoHelper.xml" />
 		<file src="djdsoft.png" target="images\" />
 	</files>
-	<dependencies>
-		<dependency id="NReco.VideoInfo" version="1.1.1" />
-		<dependency id="System.ValueTuple" version="4.5.0" />
-	</dependencies>
 </package>
