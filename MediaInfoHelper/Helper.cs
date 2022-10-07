@@ -5,7 +5,6 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-    using DS = FFProbe;
     using NR = NReco.VideoInfo;
 
     /// <summary>
@@ -61,7 +60,7 @@
         }
 
         /// <summary>
-        /// Returns days, hours and minutes of a given time in seconds.
+        /// Returns days, hours and minutes of a given time in secon
         /// </summary>
         /// <remarks>when the remaining seconds are more or equal to 30, the  part gets rounded to the next whole number</remarks>
         public static (uint days, uint hours, uint minutes) GetTimeParts(uint totalSeconds)
@@ -106,7 +105,7 @@
         /// <summary>
         /// Reads out the video meta information of a video or subtitle file.
         /// </summary>
-        public static DS.FFProbe TryGetMediaInfo(FileInfo fileInfo, out List<DS.FFProbe> additionalSubtitleMediaInfos)
+        public static FFProbeResult TryGetMediaInfo(FileInfo fileInfo, out List<FFProbeResult> additionalSubtitleMediaInfos)
         {
             try
             {
@@ -122,13 +121,13 @@
             }
         }
 
-        private static DS.FFProbe GetMediaInfo(FileInfo fileInfo, out List<DS.FFProbe> additionalSubtitleMediaInfos)
+        private static FFProbeResult GetMediaInfo(FileInfo fileInfo, out List<FFProbeResult> additionalSubtitleMediaInfos)
         {
             var mediaInfo = (new NR.FFProbe()).GetMediaInfo(fileInfo.FullName);
 
             var xml = mediaInfo.Result.CreateNavigator().OuterXml;
 
-            var ffprobe = Serializer<DS.FFProbe>.FromString(xml);
+            var ffprobe = Serializer<FFProbeResult>.FromString(xml);
 
             ffprobe.FileName = fileInfo.Name;
 
@@ -137,11 +136,11 @@
             return ffprobe;
         }
 
-        private static IEnumerable<DS.FFProbe> GetSubtitleMediaInfo(FileInfo fileInfo)
+        private static IEnumerable<FFProbeResult> GetSubtitleMediaInfo(FileInfo fileInfo)
         {
             var baseName = Path.GetFileNameWithoutExtension(fileInfo.Name);
 
-            var result = new List<DS.FFProbe>();
+            var result = new List<FFProbeResult>();
 
             try
             {
@@ -160,7 +159,7 @@
             return result;
         }
 
-        private static IEnumerable<DS.FFProbe> GetIdxSubSubtitleMediaInfo(FileInfo fileInfo, string baseName)
+        private static IEnumerable<FFProbeResult> GetIdxSubSubtitleMediaInfo(FileInfo fileInfo, string baseName)
         {
             var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.idx", SearchOption.TopDirectoryOnly);
 
@@ -171,7 +170,7 @@
             return result;
         }
 
-        private static DS.FFProbe TryGetIdxSubSubtitleMediaInfo(FileInfo subtitleFile)
+        private static FFProbeResult TryGetIdxSubSubtitleMediaInfo(FileInfo subtitleFile)
         {
             var subtitleBaseName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
 
@@ -184,14 +183,14 @@
 
             var xml = mediaInfo.Result.CreateNavigator().OuterXml;
 
-            var ffprobe = Serializer<DS.FFProbe>.FromString(xml);
+            var ffprobe = Serializer<FFProbeResult>.FromString(xml);
 
             ffprobe.FileName = subtitleFile.Name;
 
             return ffprobe;
         }
 
-        private static IEnumerable<DS.FFProbe> GetSrtSubtitleMediaInfo(FileInfo fileInfo, string baseName)
+        private static IEnumerable<FFProbeResult> GetSrtSubtitleMediaInfo(FileInfo fileInfo, string baseName)
         {
             var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.srt", SearchOption.TopDirectoryOnly);
 
@@ -202,7 +201,7 @@
             return result;
         }
 
-        private static DS.FFProbe TryGetSrtSubtitleMediaInfo(FileInfo subtitleFile, string baseName)
+        private static FFProbeResult TryGetSrtSubtitleMediaInfo(FileInfo subtitleFile, string baseName)
         {
             var nameParts = Path.GetFileNameWithoutExtension(subtitleFile.Name)
                 .Replace(baseName, string.Empty)
@@ -239,17 +238,17 @@
             return null;
         }
 
-        private static DS.FFProbe CreateSrtProbe(FileInfo subtitleFile, string language) => new DS.FFProbe()
+        private static FFProbeResult CreateSrtProbe(FileInfo subtitleFile, string language) => new FFProbeResult()
         {
             FileName = subtitleFile.Name,
-            streams = new DS.Stream[]
+            streams = new Stream[]
             {
-                new DS.Stream()
+                new Stream()
                 {
                     codec_type = "subtitle",
-                    tag = new DS.Tag[]
+                    tag = new Tag[]
                     {
-                        new DS.Tag()
+                        new Tag()
                         {
                             key = "language",
                             value = language,

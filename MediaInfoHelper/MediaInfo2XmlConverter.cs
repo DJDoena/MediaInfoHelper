@@ -4,10 +4,9 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using FF = FFProbe;
 
     /// <summary>
-    /// Converts an <see cref="FF.FFProbe"/> instance into an <see cref="VideoInfo"/> instance.
+    /// Converts an <see cref="FFProbeResult"/> instance into an <see cref="VideoInfo"/> instance.
     /// </summary>
     public static class MediaInfo2XmlConverter
     {
@@ -23,12 +22,12 @@
         /// <summary>
         /// Return the language property of a stream, if exists, otherwise the original language of the stream.
         /// </summary>
-        public static string GetLanguage(this IEnumerable<FF.Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "language")?.value ?? _originalLanguage;
+        public static string GetLanguage(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "language")?.value ?? _originalLanguage;
 
         /// <summary>
-        /// Converts an <see cref="FF.FFProbe"/> instance into an <see cref="VideoInfo"/> instance.
+        /// Converts an <see cref="FFProbeResult"/> instance into an <see cref="VideoInfo"/> instance.
         /// </summary>
-        public static VideoInfo Convert(FF.FFProbe ffprobe, string originalLanguage)
+        public static VideoInfo Convert(FFProbeResult ffprobe, string originalLanguage)
         {
             _originalLanguage = originalLanguage;
 
@@ -44,7 +43,7 @@
             }
         }
 
-        private static VideoInfo TryConvert(FF.FFProbe ffprobe)
+        private static VideoInfo TryConvert(FFProbeResult ffprobe)
         {
             var info = new VideoInfo()
             {
@@ -74,9 +73,9 @@
             return info;
         }
 
-        private static bool IsSubtile(FF.Stream stream) => stream?.codec_type == "subtitle";
+        private static bool IsSubtile(Stream stream) => stream?.codec_type == "subtitle";
 
-        private static Subtitle GetXmlSubtitle(FF.Stream stream, string fileName) => new Subtitle()
+        private static Subtitle GetXmlSubtitle(Stream stream, string fileName) => new Subtitle()
         {
             CodecName = stream.codec_name,
             CodecLongName = stream.codec_long_name,
@@ -85,9 +84,9 @@
             SubtitleFile = fileName,
         };
 
-        private static bool IsAudio(FF.Stream stream) => stream?.codec_type == "audio";
+        private static bool IsAudio(Stream stream) => stream?.codec_type == "audio";
 
-        private static Audio GetXmlAudio(FF.Stream stream) => new Audio()
+        private static Audio GetXmlAudio(Stream stream) => new Audio()
         {
             CodecName = stream.codec_name,
             CodecLongName = stream.codec_long_name,
@@ -98,9 +97,9 @@
             Title = stream.tag.GetTitle(),
         };
 
-        private static bool IsVideo(FF.Stream stream) => stream?.codec_type == "video";
+        private static bool IsVideo(Stream stream) => stream?.codec_type == "video";
 
-        private static Video GetXmlVideo(FF.Stream stream) => new Video()
+        private static Video GetXmlVideo(Stream stream) => new Video()
         {
             CodecName = stream.codec_name,
             CodecLongName = stream.codec_long_name,
@@ -109,7 +108,7 @@
             Title = stream.tag.GetTitle(),
         };
 
-        private static AspectRatio GetAspectRatio(FF.Stream stream)
+        private static AspectRatio GetAspectRatio(Stream stream)
         {
             var ratio = new AspectRatio()
             {
@@ -189,6 +188,6 @@
 
         private static bool TryParseDouble(string duration, out double seconds) => double.TryParse(duration, NumberStyles.AllowDecimalPoint, _cultureInfo, out seconds);
 
-        private static string GetTitle(this IEnumerable<FF.Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "title")?.value;
+        private static string GetTitle(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "title")?.value;
     }
 }

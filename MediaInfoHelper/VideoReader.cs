@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using FF = FFProbe;
 
     /// <summary>
     /// Class to read out the basic information about a media file.
@@ -147,7 +146,7 @@
             return 0;
         }
 
-        private FF.FFProbe GetMediaInfo()
+        private FFProbeResult GetMediaInfo()
         {
             try
             {
@@ -155,7 +154,7 @@
 
                 var xml = mediaInfo.Result.CreateNavigator().OuterXml;
 
-                var ffprobe = Serializer<FF.FFProbe>.FromString(xml);
+                var ffprobe = Serializer<FFProbeResult>.FromString(xml);
 
                 return ffprobe;
             }

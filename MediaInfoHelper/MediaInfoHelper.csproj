@@ -65,8 +65,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DateTimeConformer.cs" />
     <Compile Include="DvdWatches.cs" />
-    <Compile Include="FFProbe.cs">
-      <DependentUpon>FFProbe.xsd</DependentUpon>
+    <Compile Include="FFProbeResult.cs">
+      <DependentUpon>FFProbeResult.xsd</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="MediaFileData.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="YoutubeVideoInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FFProbe.xsd">
+    <None Include="FFProbeResult.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="MediaInfoHelper.nuspec" />
