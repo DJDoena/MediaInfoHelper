@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using FFProbeResultXml;
 
     /// <summary>
     /// Class to read out the basic information about a media file.

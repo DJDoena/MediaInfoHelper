@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- xsd.exe /l:cs /c /nologo /n:DoenaSoft.MediaInfoHelper /f FFProbeResult.xsd -->
+<!-- xsd.exe /l:cs /c /nologo /n:DoenaSoft.MediaInfoHelper.FFProbeResultXml /f FFProbeResult.xsd -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="FFProbeResult" type="FFProbeResult" />
+	<xs:element name="ffprobe" type="FFProbeResult" />
 
 	<xs:complexType name="Tag">
 		<xs:attribute name="key" type="xs:string" />

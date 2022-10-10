@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using FFProbeResultXml;
 
     /// <summary>
     /// Converts an <see cref="FFProbeResult"/> instance into an <see cref="VideoInfo"/> instance.

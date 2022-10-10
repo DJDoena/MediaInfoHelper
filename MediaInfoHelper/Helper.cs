@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using FFProbeResultXml;
     using NR = NReco.VideoInfo;
 
     /// <summary>
@@ -241,9 +242,9 @@
         private static FFProbeResult CreateSrtProbe(FileInfo subtitleFile, string language) => new FFProbeResult()
         {
             FileName = subtitleFile.Name,
-            streams = new Stream[]
+            streams = new FFProbeResultXml.Stream[]
             {
-                new Stream()
+                new FFProbeResultXml.Stream()
                 {
                     codec_type = "subtitle",
                     tag = new Tag[]
