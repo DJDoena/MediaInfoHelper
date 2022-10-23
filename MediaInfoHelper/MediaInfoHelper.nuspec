@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DoenaSoft.MediaInfoHelper</id>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <title>DoenaSoft.MediaInfoHelper</title>
     <authors>DJ Doena</authors>
     <icon>images\djdsoft.png</icon>
@@ -18,8 +18,17 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.dll" target="lib\net452\DoenaSoft.MediaInfoHelper.dll" />
-    <file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.xml" target="lib\net452\DoenaSoft.MediaInfoHelper.xml" />
+    <file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.dll" target="build\x64\DoenaSoft.MediaInfoHelper.dll" />
+    <file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.xml" target="build\x64\DoenaSoft.MediaInfoHelper.xml" />
+
+    <file src="bin\x86\Release\DoenaSoft.MediaInfoHelper.dll" target="build\x86\DoenaSoft.MediaInfoHelper.dll" />
+    <file src="bin\x86\Release\DoenaSoft.MediaInfoHelper.xml" target="build\x86\DoenaSoft.MediaInfoHelper.xml" />
+
+    <file src="bin\Release\DoenaSoft.MediaInfoHelper.dll" target="build\DoenaSoft.MediaInfoHelper.dll" />
+    <file src="bin\Release\DoenaSoft.MediaInfoHelper.xml" target="build\DoenaSoft.MediaInfoHelper.xml" />
+
+    <file src="DoenaSoft.MediaInfoHelper.props" target="build\net452" />
+    
     <file src="djdsoft.png" target="images\" />
   </files>
 </package>
