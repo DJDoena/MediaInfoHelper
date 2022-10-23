@@ -43,7 +43,7 @@ jobs:
         run: msbuild.exe ${{ env.SOLUTION_FILE }} /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform="Any CPU"
 
       - name: Pack Nuget
-        run: nuget.exe pack ${{ env.PROJECT_FOLDER }}\${{ env.NUGET_SPEC }} -OutputDirectory ${{ env.PROJECT_FOLDER }}\${{ env.BUILD_OUTPUT }}
+        run: nuget.exe pack ${{ env.PROJECT_FOLDER }}\${{ env.NUGET_SPEC }} -OutputDirectory ${{ env.PROJECT_FOLDER }}
 
       - name: Push Nuget
-        run: nuget.exe push ${{ env.PROJECT_FOLDER }}\${{ env.BUILD_OUTPUT }}\*.nupkg -ApiKey ${{secrets.NUGET_API_KEY}} -Source "${{env.SOURCE_URL}}"
+        run: nuget.exe push ${{ env.PROJECT_FOLDER }}\*.nupkg -ApiKey ${{secrets.NUGET_API_KEY}} -Source "${{env.SOURCE_URL}}"
