@@ -92,6 +92,7 @@
       <DependentUpon>FFProbeResult.xsd</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
+    <Compile Include="LanguageExtensions.cs" />
     <Compile Include="MediaFileData.cs" />
     <Compile Include="MediaInfo2XmlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
