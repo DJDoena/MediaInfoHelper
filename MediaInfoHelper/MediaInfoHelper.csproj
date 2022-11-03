@@ -107,6 +107,7 @@
       <DependentUpon>VideoInfo.xsd</DependentUpon>
     </Compile>
     <Compile Include="VideoReader.cs" />
+    <Compile Include="ManualVideoInfo.cs" />
     <Compile Include="YoutubeVideoInfo.cs" />
   </ItemGroup>
   <ItemGroup>
