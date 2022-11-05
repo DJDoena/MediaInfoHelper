@@ -70,7 +70,7 @@
                     }
                 default:
                     {
-                        return language.ToLower();
+                        return language?.ToLower();
                     }
             }
         }
