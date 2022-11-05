@@ -10,12 +10,16 @@
         /// <summary>
         /// Standardizes audio track names for German, English, Arabic, Spanish, Japanese and Korean.
         /// </summary>
-        public static IEnumerable<string> StandardizeLanguage(this IEnumerable<Audio> audios) => audios?.Select(a => a.Language?.ToLower());
+        public static IEnumerable<string> StandardizeLanguage(this IEnumerable<Audio> audios) => audios?
+            .Select(a => a.Language)
+            .StandardizeLanguage();
 
         /// <summary>
         /// Standardizes subtitle track names for German, English, Arabic, Spanish, Japanese and Korean.
         /// </summary>
-        public static IEnumerable<string> StandardizeLanguage(this IEnumerable<Subtitle> sutitles) => sutitles?.Select(a => a.Language?.ToLower());
+        public static IEnumerable<string> StandardizeLanguage(this IEnumerable<Subtitle> sutitles) => sutitles?
+            .Select(a => a.Language)
+            .StandardizeLanguage();
 
         /// <summary>
         /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
