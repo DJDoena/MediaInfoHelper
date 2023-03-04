@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Doena Soft.")]
 [assembly: AssemblyProduct("MediaInfoHelper")]
-[assembly: AssemblyCopyright("Copyright ©  2019 - 2022")]
+[assembly: AssemblyCopyright("Copyright ©  2019 - 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -18,5 +18,5 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("2.0.7.0")]
-[assembly: AssemblyFileVersion("2.0.7.0")]
+[assembly: AssemblyVersion("2.0.8.0")]
+[assembly: AssemblyFileVersion("2.0.8.0")]
