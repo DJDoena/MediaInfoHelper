@@ -152,6 +152,13 @@
 
             try
             {
+                result.AddRange(GetIfoSupSubtitleMediaInfo(fileInfo, baseName));
+            }
+            catch
+            { }
+
+            try
+            {
                 result.AddRange(GetSrtSubtitleMediaInfo(fileInfo, baseName));
             }
             catch
@@ -160,9 +167,11 @@
             return result;
         }
 
+        #region GetIdxSubSubtitleMediaInfo
+
         private static IEnumerable<FFProbeResult> GetIdxSubSubtitleMediaInfo(FileInfo fileInfo, string baseName)
         {
-            var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.idx", SearchOption.TopDirectoryOnly);
+            var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.sup", SearchOption.TopDirectoryOnly);
 
             var result = subtitleFiles
                 .Select(TryGetIdxSubSubtitleMediaInfo)
@@ -190,6 +199,45 @@
 
             return ffprobe;
         }
+
+        #endregion
+
+        #region GetIfoSupSubtitleMediaInfo
+
+        private static IEnumerable<FFProbeResult> GetIfoSupSubtitleMediaInfo(FileInfo fileInfo, string baseName)
+        {
+            var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.sup", SearchOption.TopDirectoryOnly);
+
+            var result = subtitleFiles
+                .Select(TryGetIfoSupSubtitleMediaInfo)
+                .Where(ff => ff?.streams?.Length > 0);
+
+            return result;
+        }
+
+        private static FFProbeResult TryGetIfoSupSubtitleMediaInfo(FileInfo subtitleFile)
+        {
+            var subtitleBaseName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
+
+            if (!File.Exists(Path.Combine(subtitleFile.DirectoryName, $"{subtitleBaseName}.sup")))
+            {
+                return null;
+            }
+
+            var mediaInfo = (new NR.FFProbe()).GetMediaInfo(subtitleFile.FullName);
+
+            var xml = mediaInfo.Result.CreateNavigator().OuterXml;
+
+            var ffprobe = Serializer<FFProbeResult>.FromString(xml);
+
+            ffprobe.FileName = subtitleFile.Name;
+
+            return ffprobe;
+        }
+
+        #endregion
+
+        #region GetSrtSubtitleMediaInfo
 
         private static IEnumerable<FFProbeResult> GetSrtSubtitleMediaInfo(FileInfo fileInfo, string baseName)
         {
@@ -258,5 +306,7 @@
                 },
             },
         };
+
+        #endregion
     }
 }
