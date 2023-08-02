@@ -34,7 +34,7 @@
         /// </summary>
         public static string StandardizeLanguage(string language)
         {
-            switch (language?.ToLower())
+            switch (language?.ToLowerInvariant())
             {
                 case "de":
                 case "deu":

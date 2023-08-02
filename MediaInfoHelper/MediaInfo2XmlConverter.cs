@@ -23,7 +23,7 @@
         /// <summary>
         /// Return the language property of a stream, if exists, otherwise the original language of the stream.
         /// </summary>
-        public static string GetLanguage(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "language")?.value ?? _originalLanguage;
+        public static string GetLanguage(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key?.ToLowerInvariant() == "language")?.value ?? _originalLanguage;
 
         /// <summary>
         /// Converts an <see cref="FFProbeResult"/> instance into an <see cref="VideoInfo"/> instance.
@@ -74,7 +74,7 @@
             return info;
         }
 
-        private static bool IsSubtile(Stream stream) => stream?.codec_type == "subtitle";
+        private static bool IsSubtile(Stream stream) => stream?.codec_type?.ToLowerInvariant() == "subtitle";
 
         private static Subtitle GetXmlSubtitle(Stream stream, string fileName) => new Subtitle()
         {
@@ -85,7 +85,7 @@
             SubtitleFile = fileName,
         };
 
-        private static bool IsAudio(Stream stream) => stream?.codec_type == "audio";
+        private static bool IsAudio(Stream stream) => stream?.codec_type?.ToLowerInvariant() == "audio";
 
         private static Audio GetXmlAudio(Stream stream) => new Audio()
         {
@@ -98,7 +98,7 @@
             Title = stream.tag.GetTitle(),
         };
 
-        private static bool IsVideo(Stream stream) => stream?.codec_type == "video";
+        private static bool IsVideo(Stream stream) => stream?.codec_type?.ToLowerInvariant() == "video";
 
         private static Video GetXmlVideo(Stream stream) => new Video()
         {
@@ -189,6 +189,6 @@
 
         private static bool TryParseDouble(string duration, out double seconds) => double.TryParse(duration, NumberStyles.AllowDecimalPoint, _cultureInfo, out seconds);
 
-        private static string GetTitle(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key == "title")?.value;
+        private static string GetTitle(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key?.ToLowerInvariant() == "title")?.value;
     }
 }

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DoenaSoft.MediaInfoHelper</id>
-    <version>2.0.9</version>
+    <version>2.0.10</version>
     <title>DoenaSoft.MediaInfoHelper</title>
     <authors>DJ Doena</authors>
     <icon>images\djdsoft.png</icon>
@@ -10,7 +10,7 @@
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/DJDoena/MediaInfoHelper</projectUrl>
     <description>Library to query video files for their meta information</description>
-    <copyright>2019 - 2022</copyright>
+    <copyright>2019 - 2023</copyright>
     <tags>ffprobe, video-files</tags>
     <dependencies>
       <dependency id="NReco.VideoInfo" version="1.2.0" />
