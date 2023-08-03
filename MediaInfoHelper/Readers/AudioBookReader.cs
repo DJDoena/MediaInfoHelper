@@ -14,12 +14,16 @@ namespace DoenaSoft.MediaInfoHelper.Readers
     /// <summary />
     public sealed class AudioBookReader
     {
+        /// <summary />
         public delegate BookRole GetRole(string bookTitle, string person);
 
+        /// <summary />
         public delegate string GetAuthor(string bookTitle);
 
+        /// <summary />
         public delegate string GetNarrator(string bookTitle);
 
+        /// <summary />
         public delegate void Log(string message);
 
         private readonly GetRole _getRole;

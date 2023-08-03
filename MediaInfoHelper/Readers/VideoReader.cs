@@ -13,6 +13,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
     /// </summary>
     public sealed class VideoReader
     {
+        /// <summary />
         public delegate uint GetRunningTime();
 
         private readonly GetRunningTime _getRunningTime;
@@ -20,8 +21,6 @@ namespace DoenaSoft.MediaInfoHelper.Readers
         private readonly MediaFile _mediaFile;
 
         /// <summary />
-        /// <param name="mediaFile">the media file</param>
-        /// <param name="manualInput">whether or not the user shall be shown an input form for the video length if it cannot be determined automatically</param>
         public VideoReader(MediaFile mediaFile
             , GetRunningTime getRunningTime = null)
         {
