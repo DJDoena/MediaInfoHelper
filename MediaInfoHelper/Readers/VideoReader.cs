@@ -14,7 +14,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
     public sealed class VideoReader
     {
         /// <summary />
-        public delegate uint GetRunningTime();
+        public delegate uint GetRunningTime(string fileName);
 
         private readonly GetRunningTime _getRunningTime;
 
@@ -50,7 +50,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
                 }
                 else if (_getRunningTime != null)
                 {
-                    seconds = _getRunningTime();
+                    seconds = _getRunningTime(_mediaFile.FileName);
                 }
             }
             else if (File.Exists(_mediaFile.FileName))

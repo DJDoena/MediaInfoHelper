@@ -4,11 +4,26 @@ using System.Xml.Serialization;
 
 namespace DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml
 {
+    public partial class VideoInfoDocument
+    {
+        /// <summary />
+        [XmlAnyElement]
+        public XmlElement[] AnyElements;
+
+        /// <summary />
+        [XmlAnyAttribute]
+        public XmlAttribute[] AnyAttributes;
+    }
+
     public partial class VideoMeta
     {
         /// <summary />
         [XmlAnyElement]
-        public XmlElement[] Any;
+        public XmlElement[] AnyElements;
+
+        /// <summary />
+        [XmlAnyAttribute]
+        public XmlAttribute[] AnyAttributes;
     }
 
     [DebuggerDisplay("Series: {SeriesName}, Episode: {EpisodeName}")]
