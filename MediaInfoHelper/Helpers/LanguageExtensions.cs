@@ -1,25 +1,58 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
 
+namespace DoenaSoft.MediaInfoHelper.Helpers
+{
     /// <summary />
     public static class LanguageExtensions
     {
         /// <summary>
         /// Standardizes audio track names for German, English, Arabic, Spanish, Japanese and Korean.
         /// </summary>
-        public static IEnumerable<string> StandardizeLanguage(this IEnumerable<Audio> audios) => audios?
-            .Select(a => a.Language)
-            .StandardizeLanguage();
+        public static IEnumerable<string> GetDistinctLanguages(this IEnumerable<Audio> audios) => audios?
+            .Select(a => a.GetLanguage())
+            .StandardizeLanguage()
+            .Distinct();
 
         /// <summary>
         /// Standardizes subtitle track names for German, English, Arabic, Spanish, Japanese and Korean.
         /// </summary>
-        public static IEnumerable<string> StandardizeLanguage(this IEnumerable<Subtitle> sutitles) => sutitles?
-            .Select(a => a.Language)
-            .StandardizeLanguage();
+        public static IEnumerable<string> GetDistinctLanguages(this IEnumerable<Subtitle> sutitles) => sutitles?
+            .Select(a => a.GetLanguage())
+            .StandardizeLanguage()
+            .Distinct();
+
+        /// <summary>
+        /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// </summary>
+        public static IEnumerable<Audio> StandardizeLanguage(this IEnumerable<Audio> audios) => audios?
+            .Where(a => a != null)
+            .Select(a => new Audio()
+            {
+                ChannelLayout = a.ChannelLayout,
+                Channels = a.Channels,
+                CodecLongName = a.CodecLongName,
+                CodecName = a.CodecName,
+                Language = StandardizeLanguage(a.GetLanguage()),
+                SampleRate = a.SampleRate,
+                Title = a.Title,
+            });
+
+        /// <summary>
+        /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// </summary>
+        public static IEnumerable<Subtitle> StandardizeLanguage(this IEnumerable<Subtitle> subtitles) => subtitles?
+            .Where(s => s != null)
+            .Select(s => new Subtitle()
+            {
+                CodecLongName = s.CodecLongName,
+                CodecName = s.CodecName,
+                Language = StandardizeLanguage(s.GetLanguage()),
+                SubtitleFile = s.SubtitleFile,
+                Title = s.Title,
+            });
 
         /// <summary>
         /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.

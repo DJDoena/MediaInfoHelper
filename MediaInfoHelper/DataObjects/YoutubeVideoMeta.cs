@@ -1,11 +1,13 @@
-﻿namespace DoenaSoft.MediaInfoHelper.Youtube
-{
-    using System;
+﻿using System;
+using System.Xml.Serialization;
 
+namespace DoenaSoft.MediaInfoHelper.DataObjects
+{
     /// <summary>
     /// XML structure to represent a Youtube video.
     /// </summary>
-    public sealed class YoutubeVideoInfo
+    [XmlRoot("YoutubeVideoInfo")]
+    public sealed class YoutubeVideo
     {
         /// <summary />
         public string Id { get; set; }

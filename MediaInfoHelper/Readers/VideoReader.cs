@@ -1,9 +1,14 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System;
-    using System.IO;
-    using FFProbeResultXml;
+﻿using System;
+using System.IO;
+using DoenaSoft.MediaInfoHelper.DataObjects;
+using DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
+using DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
+using DoenaSoft.MediaInfoHelper.Forms;
+using DoenaSoft.MediaInfoHelper.Helpers;
+using NR = global::NReco.VideoInfo;
 
+namespace DoenaSoft.MediaInfoHelper.Readers
+{
     /// <summary>
     /// Class to read out the basic information about a media file.
     /// </summary>
@@ -11,12 +16,12 @@
     {
         private readonly bool _manualInput;
 
-        private readonly MediaFileData _mediaFile;
+        private readonly MediaFile _mediaFile;
 
         /// <summary />
         /// <param name="mediaFile">the media file</param>
         /// <param name="manualInput">whether or not the user shall be shown an input form for the video length if it cannot be determined automatically</param>
-        public VideoReader(MediaFileData mediaFile, bool manualInput)
+        public VideoReader(MediaFile mediaFile, bool manualInput)
         {
             _mediaFile = mediaFile;
             _manualInput = manualInput;
@@ -38,8 +43,8 @@
                 || _mediaFile.FileName.EndsWith(Constants.YoutubeFileExtension)
                 || _mediaFile.FileName.EndsWith(Constants.ManualFileExtension))
             {
-                seconds = _mediaFile.VideoLengthSpecified
-                   ? _mediaFile.VideoLength
+                seconds = _mediaFile.LengthSpecified
+                   ? _mediaFile.Length
                    : this.GetUserInput();
             }
             else if (File.Exists(_mediaFile.FileName))
@@ -49,7 +54,7 @@
 
             if (seconds > 0)
             {
-                _mediaFile.VideoLength = seconds;
+                _mediaFile.Length = seconds;
 
                 return;
             }
@@ -80,7 +85,7 @@
                 return false;
             }
 
-            var isValid = _mediaFile.VideoLengthSpecified;
+            var isValid = _mediaFile.LengthSpecified;
 
             return isValid;
         }
@@ -122,7 +127,7 @@
             {
                 try
                 {
-                    var info = Serializer<Doc>.Deserialize(xmlFile);
+                    var info = XmlSerializer<Doc>.Deserialize(xmlFile);
 
                     return info.VideoInfo.Duration;
                 }
@@ -139,7 +144,7 @@
 
             if (mediaInfo != null)
             {
-                var xmlInfo = MediaInfo2XmlConverter.Convert(mediaInfo, null);
+                var xmlInfo = FFProbeMetaConverter.Convert(mediaInfo, null);
 
                 return xmlInfo.DurationSpecified ? xmlInfo.Duration : 0;
             }
@@ -147,15 +152,15 @@
             return 0;
         }
 
-        private FFProbeResult GetMediaInfo()
+        private FFProbeMeta GetMediaInfo()
         {
             try
             {
-                var mediaInfo = (new NReco.VideoInfo.FFProbe()).GetMediaInfo(_mediaFile.FileName);
+                var mediaInfo = (new NR.FFProbe()).GetMediaInfo(_mediaFile.FileName);
 
                 var xml = mediaInfo.Result.CreateNavigator().OuterXml;
 
-                var ffprobe = Serializer<FFProbeResult>.FromString(xml);
+                var ffprobe = XmlSerializer<FFProbeMeta>.FromString(xml);
 
                 return ffprobe;
             }

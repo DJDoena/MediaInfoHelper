@@ -1,4 +1,4 @@
-﻿namespace DoenaSoft.MediaInfoHelper
+﻿namespace DoenaSoft.MediaInfoHelper.Helpers
 {
     /// <summary>
     /// Constants for special file extensions this library is aware of.

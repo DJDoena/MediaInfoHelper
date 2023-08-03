@@ -1,7 +1,7 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System;
+﻿using System;
 
+namespace DoenaSoft.MediaInfoHelper.Helpers
+{
     /// <summary>
     /// Extension class for <see cref="DateTime"/>.
     /// </summary>

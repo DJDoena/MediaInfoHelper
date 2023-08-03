@@ -1,8 +1,8 @@
-﻿namespace DoenaSoft.MediaInfoHelper.DVDProfiler
-{
-    using System;
-    using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
+namespace DoenaSoft.MediaInfoHelper.DataObjects
+{
     /// <summary>
     /// XML structure to represent a DVD Profiler profile.
     /// </summary>

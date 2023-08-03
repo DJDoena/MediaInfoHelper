@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- xsd.exe /l:cs /c /nologo /n:DoenaSoft.MediaInfoHelper.FFProbeResultXml /f FFProbeResult.xsd -->
+<!-- xsd.exe /l:cs /c /nologo /n:DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml /f FFProbeMeta.xsd -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="ffprobe" type="FFProbeResult" />
+	<xs:element name="ffprobe" type="FFProbeMeta" />
 
 	<xs:complexType name="Tag">
 		<xs:attribute name="key" type="xs:string" />
 		<xs:attribute name="value" type="xs:string" />
 	</xs:complexType>
 
-	<xs:complexType name="FFProbeResult">
+	<xs:complexType name="FFProbeMeta">
 		<xs:sequence>
 			<xs:element name="streams" type="Streams" />
 			<xs:element name="format" type="Format" />

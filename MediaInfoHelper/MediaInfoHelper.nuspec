@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
-  <metadata>
-    <id>DoenaSoft.MediaInfoHelper</id>
-    <version>2.0.10</version>
-    <title>DoenaSoft.MediaInfoHelper</title>
-    <authors>DJ Doena</authors>
-    <icon>images\djdsoft.png</icon>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
-    <projectUrl>https://github.com/DJDoena/MediaInfoHelper</projectUrl>
-    <description>Library to query video files for their meta information</description>
-    <copyright>2019 - 2023</copyright>
-    <tags>ffprobe, video-files</tags>
-    <dependencies>
-      <dependency id="NReco.VideoInfo" version="1.2.0" />
-      <dependency id="System.ValueTuple" version="4.5.0" />
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.dll" target="build\x64\DoenaSoft.MediaInfoHelper.dll" />
-    <file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.xml" target="build\x64\DoenaSoft.MediaInfoHelper.xml" />
+	<metadata>
+		<id>DoenaSoft.MediaInfoHelper</id>
+		<version>3.0.0</version>
+		<title>DoenaSoft.MediaInfoHelper</title>
+		<authors>DJ Doena</authors>
+		<icon>images\djdsoft.png</icon>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/DJDoena/MediaInfoHelper</projectUrl>
+		<description>Library to query audio and video files for their meta information</description>
+		<copyright>2019 - 2023</copyright>
+		<tags>ffprobe, video-files</tags>
+		<dependencies>
+			<dependency id="NReco.VideoInfo" version="1.2.0" />
+			<dependency id="NAudio" version="2.1.0" />
+			<dependency id="taglib" version="2.1.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.dll" target="build\x64\DoenaSoft.MediaInfoHelper.dll" />
+		<file src="bin\x64\Release\DoenaSoft.MediaInfoHelper.xml" target="build\x64\DoenaSoft.MediaInfoHelper.xml" />
 
-    <file src="bin\x86\Release\DoenaSoft.MediaInfoHelper.dll" target="build\x86\DoenaSoft.MediaInfoHelper.dll" />
-    <file src="bin\x86\Release\DoenaSoft.MediaInfoHelper.xml" target="build\x86\DoenaSoft.MediaInfoHelper.xml" />
+		<file src="bin\x86\Release\DoenaSoft.MediaInfoHelper.dll" target="build\x86\DoenaSoft.MediaInfoHelper.dll" />
+		<file src="bin\x86\Release\DoenaSoft.MediaInfoHelper.xml" target="build\x86\DoenaSoft.MediaInfoHelper.xml" />
 
-    <file src="bin\Release\DoenaSoft.MediaInfoHelper.dll" target="build\DoenaSoft.MediaInfoHelper.dll" />
-    <file src="bin\Release\DoenaSoft.MediaInfoHelper.xml" target="build\DoenaSoft.MediaInfoHelper.xml" />
+		<file src="bin\Release\DoenaSoft.MediaInfoHelper.dll" target="build\DoenaSoft.MediaInfoHelper.dll" />
+		<file src="bin\Release\DoenaSoft.MediaInfoHelper.xml" target="build\DoenaSoft.MediaInfoHelper.xml" />
 
-    <file src="DoenaSoft.MediaInfoHelper.props" target="build\net452" />
-    
-    <file src="djdsoft.png" target="images\" />
-  </files>
+		<file src="DoenaSoft.MediaInfoHelper.props" target="build\net472" />
+
+		<file src="djdsoft.png" target="images\" />
+	</files>
 </package>

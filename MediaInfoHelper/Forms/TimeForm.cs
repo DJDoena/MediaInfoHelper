@@ -1,9 +1,10 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System;
-    using System.IO;
-    using System.Windows.Forms;
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
+using DoenaSoft.MediaInfoHelper.Helpers;
 
+namespace DoenaSoft.MediaInfoHelper.Forms
+{
     internal sealed partial class TimeForm : Form
     {
         internal uint Time { get; private set; }
@@ -38,7 +39,7 @@
         {
             var text = SecondsTextBox.Text;
 
-            TimeTextBox.Text = text.Contains(":") ? GetSeconds(text) : Helper.FormatTime(uint.Parse(text));
+            TimeTextBox.Text = text.Contains(":") ? GetSeconds(text) : TimeHelper.FormatTime(uint.Parse(text));
 
             uint.TryParse(TimeTextBox.Text, out uint time);
 

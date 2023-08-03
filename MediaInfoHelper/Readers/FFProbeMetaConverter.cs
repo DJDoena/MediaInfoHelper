@@ -1,21 +1,22 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using FFProbeResultXml;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
+using DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
 
+namespace DoenaSoft.MediaInfoHelper.Readers
+{
     /// <summary>
-    /// Converts an <see cref="FFProbeResult"/> instance into an <see cref="VideoInfo"/> instance.
+    /// Converts an <see cref="FFProbeMeta"/> instance into an <see cref="VideoMeta"/> instance.
     /// </summary>
-    public static class MediaInfo2XmlConverter
+    public static class FFProbeMetaConverter
     {
         private static readonly CultureInfo _cultureInfo;
 
         private static string _originalLanguage;
 
-        static MediaInfo2XmlConverter()
+        static FFProbeMetaConverter()
         {
             _cultureInfo = CultureInfo.GetCultureInfo("en-US");
         }
@@ -26,9 +27,9 @@
         public static string GetLanguage(this IEnumerable<Tag> tags) => tags?.FirstOrDefault(tag => tag.key?.ToLowerInvariant() == "language")?.value ?? _originalLanguage;
 
         /// <summary>
-        /// Converts an <see cref="FFProbeResult"/> instance into an <see cref="VideoInfo"/> instance.
+        /// Converts an <see cref="FFProbeMeta"/> instance into an <see cref="VideoMeta"/> instance.
         /// </summary>
-        public static VideoInfo Convert(FFProbeResult ffprobe, string originalLanguage)
+        public static VideoMeta Convert(FFProbeMeta ffprobe, string originalLanguage)
         {
             _originalLanguage = originalLanguage;
 
@@ -44,9 +45,9 @@
             }
         }
 
-        private static VideoInfo TryConvert(FFProbeResult ffprobe)
+        private static VideoMeta TryConvert(FFProbeMeta ffprobe)
         {
-            var info = new VideoInfo()
+            var info = new VideoMeta()
             {
                 Duration = ConvertDuration(ffprobe.format?.duration),
                 Video = ffprobe.streams?.Where(IsVideo).Select(GetXmlVideo).ToArray(),

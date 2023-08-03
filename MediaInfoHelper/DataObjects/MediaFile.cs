@@ -1,15 +1,15 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System;
+﻿using System;
 
+namespace DoenaSoft.MediaInfoHelper.DataObjects
+{
     /// <summary>
     /// Structure to represent the base data of a media file.
     /// </summary>
-    public sealed class MediaFileData
+    public sealed class MediaFile
     {
         private DateTime _creationTime;
 
-        private uint _videoLength;
+        private uint _length;
 
         /// <summary />
         public string FileName { get; }
@@ -30,14 +30,14 @@
         }
 
         /// <summary />
-        public uint VideoLength
+        public uint Length
         {
-            get => _videoLength;
+            get => _length;
             set
             {
-                if (_videoLength != value)
+                if (_length != value)
                 {
-                    _videoLength = value;
+                    _length = value;
 
                     this.HasChanged = true;
                 }
@@ -45,17 +45,17 @@
         }
 
         /// <summary />
-        public bool VideoLengthSpecified => this.VideoLength > 0;
+        public bool LengthSpecified => this.Length > 0;
 
         /// <summary />
         public bool HasChanged { get; private set; }
 
         /// <summary />
-        public MediaFileData(string fileName, DateTime creationTime, uint videoLength)
+        public MediaFile(string fileName, DateTime creationTime, uint videoLength)
         {
             this.FileName = fileName;
             this.CreationTime = creationTime;
-            this.VideoLength = videoLength;
+            this.Length = videoLength;
             this.HasChanged = false;
         }
     }

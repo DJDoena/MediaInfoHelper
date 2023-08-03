@@ -1,4 +1,4 @@
-﻿namespace DoenaSoft.MediaInfoHelper
+﻿namespace DoenaSoft.MediaInfoHelper.Forms
 {
     partial class TimeForm
     {

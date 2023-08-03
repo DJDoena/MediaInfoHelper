@@ -1,21 +1,21 @@
-﻿namespace DoenaSoft.MediaInfoHelper
-{
-    using System.Text;
-    using System.Xml;
-    using System.Xml.Serialization;
-    using IO = System.IO;
+﻿using System.Text;
+using System.Xml;
+using IO = System.IO;
+using Xml = System.Xml.Serialization;
 
+namespace DoenaSoft.MediaInfoHelper.Helpers
+{
     /// <summary>
     /// Generic Serializer which contains methods to (de)serialize data structures to and from XML.
     /// </summary>
     /// <typeparam name="T">Type of the data structure</typeparam>
-    public static class Serializer<T> where T : class, new()
+    public static class XmlSerializer<T> where T : class, new()
     {
-        private static XmlSerializer _serializer;
+        private static Xml.XmlSerializer _serializer;
 
         private static Encoding DefaultEncoding { get; }
 
-        static Serializer()
+        static XmlSerializer()
         {
             DefaultEncoding = Encoding.UTF8;
         }
@@ -23,13 +23,13 @@
         /// <summary>
         /// The XmlSerializer primed for the data structure <typeparamref name="T"/>.
         /// </summary>
-        public static XmlSerializer XmlSerializer
+        public static Xml.XmlSerializer Serializer
         {
             get
             {
                 if (_serializer == null)
                 {
-                    _serializer = new XmlSerializer(typeof(T));
+                    _serializer = new Xml.XmlSerializer(typeof(T));
                 }
 
                 return _serializer;
@@ -55,7 +55,7 @@
         /// <param name="textReader">The TextReader</param>
         /// <returns>An instance of <typeparamref name="T"/></returns>
         public static T Deserialize(IO.TextReader textReader)
-            => (T)XmlSerializer.Deserialize(textReader);
+            => (T)Serializer.Deserialize(textReader);
 
         /// <summary>
         /// Deserializes the content of <paramref name="stream"/> the data structure <typeparamref name="T"/>.
@@ -63,7 +63,7 @@
         /// <param name="stream">The stream</param>
         /// <returns>An instance of <typeparamref name="T"/></returns>
         public static T Deserialize(IO.Stream stream)
-            => (T)XmlSerializer.Deserialize(stream);
+            => (T)Serializer.Deserialize(stream);
 
         /// <summary>
         /// Serializes an instance of the data structure <typeparamref name="T"/> into a file.
@@ -105,12 +105,21 @@
         /// <param name="instance">The data structure</param>
         public static void Serialize(XmlWriter xmlWriter, T instance)
         {
-            var ns = new XmlSerializerNamespaces();
+            var ns = new Xml.XmlSerializerNamespaces();
 
             ns.Add(string.Empty, string.Empty);
 
-            XmlSerializer.Serialize(xmlWriter, instance, ns);
+            Serialize(xmlWriter, ns, instance);
         }
+
+        /// <summary>
+        /// Serializes an instance of the data structure <typeparamref name="T"/> into an XmlWriter.
+        /// </summary>
+        /// <param name="xmlWriter">The XmlWriter</param>
+        /// <param name="namespaces">The XmlSerializerNamespaces that contains namespaces for the generated XML document</param>
+        /// <param name="instance">The data structure</param>
+        public static void Serialize(XmlWriter xmlWriter, Xml.XmlSerializerNamespaces namespaces, T instance)
+            => Serializer.Serialize(xmlWriter, instance, namespaces);
 
         /// <summary>
         /// Deserializes the content of <paramref name="text"/> the data structure <typeparamref name="T"/>.
