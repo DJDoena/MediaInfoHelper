@@ -1,4 +1,4 @@
-﻿namespace DoenaSoft.MediaInfoHelper.DataObjects.Mp3MetaXml
+﻿namespace DoenaSoft.MediaInfoHelper.DataObjects.AudioBookMetaXml
 {
     public partial class RunningTime
     {

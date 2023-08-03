@@ -2,7 +2,7 @@
 <!-- xsd.exe /l:cs /c /nologo /n:DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml /f VideoMeta.xsd -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:element name="doc" type="VideoInfoDocument" />
-	<xs:element name="VideoInfo" type="VideoMeta" />	
+	<xs:element name="VideoInfo" type="VideoMeta" />
 
 	<xs:complexType name="VideoInfoDocument">
 		<xs:sequence>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DoenaSoft.MediaInfoHelper.DataObjects.Mp3Meta
+namespace DoenaSoft.MediaInfoHelper.DataObjects.AudioBookMetaXml
 {
     /// <summary/>
     [Flags]

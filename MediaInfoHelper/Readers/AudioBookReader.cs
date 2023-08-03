@@ -4,8 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DoenaSoft.MediaInfoHelper.DataObjects;
-using DoenaSoft.MediaInfoHelper.DataObjects.Mp3Meta;
-using DoenaSoft.MediaInfoHelper.DataObjects.Mp3MetaXml;
+using DoenaSoft.MediaInfoHelper.DataObjects.AudioBookMetaXml;
 using DoenaSoft.MediaInfoHelper.Helpers;
 using NA = global::NAudio.Wave;
 using TL = global::TagLib;
@@ -13,7 +12,7 @@ using TL = global::TagLib;
 namespace DoenaSoft.MediaInfoHelper.Readers
 {
     /// <summary />
-    public sealed class AudioReader
+    public sealed class AudioBookReader
     {
         public delegate BookRole GetRole(string bookTitle, string person);
 
@@ -32,7 +31,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
         private readonly Log _log;
 
         /// <summary />
-        public AudioReader(GetRole getRole = null
+        public AudioBookReader(GetRole getRole = null
             , GetAuthor getAuthor = null
             , GetNarrator getNarrator = null
             , Log log = null)
@@ -73,7 +72,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
 
             var meta = GetTagMeta(files[0], length);
 
-            XmlSerializer<Mp3Meta>.Serialize(metaFileName, meta);
+            XmlSerializer<AudioBookMeta>.Serialize(metaFileName, meta);
         }
 
         private TimeParts GetLength(List<FileInfo> files)
@@ -152,13 +151,13 @@ namespace DoenaSoft.MediaInfoHelper.Readers
             return new TimeParts((ulong)days, (ushort)hours, (ushort)minutes, (ushort)seconds);
         }
 
-        private Mp3Meta GetTagMeta(FileInfo file, TimeParts length)
+        private AudioBookMeta GetTagMeta(FileInfo file, TimeParts length)
         {
             using (var fileMeta = TL.File.Create(file.FullName))
             {
                 var tag = fileMeta?.Tag;
 
-                var meta = new Mp3Meta();
+                var meta = new AudioBookMeta();
 
 #pragma warning disable CS0618 // Type or member is obsolete
                 var people = (tag.AlbumArtists?.SelectMany(a => Split(a)) ?? Enumerable.Empty<string>())

@@ -95,8 +95,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataObjects\Mp3Meta\BookRole.cs" />
-    <Compile Include="Readers\AudioReader.cs" />
+    <Compile Include="DataObjects\AudioBookMeta\BookRole.cs" />
+    <Compile Include="Readers\AudioBookReader.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\DateTimeConformer.cs" />
     <Compile Include="DataObjects\DvdWatches.cs" />
@@ -107,11 +107,11 @@
     <Compile Include="Helpers\LanguageExtensions.cs" />
     <Compile Include="DataObjects\MediaFile.cs" />
     <Compile Include="Readers\FFProbeMetaConverter.cs" />
-    <Compile Include="DataObjects\Mp3Meta\Mp3Meta.cs">
-      <DependentUpon>Mp3Meta.xsd</DependentUpon>
+    <Compile Include="DataObjects\AudioBookMeta\AudioBookMeta.cs">
+      <DependentUpon>AudioBookMeta.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DataObjects\Mp3Meta\Mp3Meta.NotGenerated.cs">
-      <DependentUpon>Mp3Meta.xsd</DependentUpon>
+    <Compile Include="DataObjects\AudioBookMeta\AudioBookMeta.NotGenerated.cs">
+      <DependentUpon>AudioBookMeta.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\XmlSerializerT.cs" />
@@ -133,7 +133,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="MediaInfoHelper.nuspec" />
-    <None Include="DataObjects\Mp3Meta\Mp3Meta.xsd">
+    <None Include="DataObjects\AudioBookMeta\AudioBookMeta.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="DataObjects\VideoMeta\VideoMeta.xsd">
