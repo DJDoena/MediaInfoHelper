@@ -131,13 +131,16 @@
     <None Include="DoenaSoft.MediaInfoHelper.props" />
     <None Include="DataObjects\FFProbeMeta\FFProbeMeta.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="MediaInfoHelper.nuspec" />
     <None Include="DataObjects\AudioBookMeta\AudioBookMeta.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DataObjects\VideoMeta\VideoMeta.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
