@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- xsd.exe /l:cs /c /nologo /n:DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml /f VideoMeta.xsd -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="Doc" type="Doc" />
+	<xs:element name="doc" type="VideoInfoDocument" />
 	<xs:element name="VideoInfo" type="VideoMeta" />	
 
-	<xs:complexType name="Doc">
+	<xs:complexType name="VideoInfoDocument">
 		<xs:sequence>
 			<xs:element name="VideoInfo" type="VideoMeta" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>

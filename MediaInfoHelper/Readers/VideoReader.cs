@@ -3,7 +3,6 @@ using System.IO;
 using DoenaSoft.MediaInfoHelper.DataObjects;
 using DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
 using DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
-using DoenaSoft.MediaInfoHelper.Forms;
 using DoenaSoft.MediaInfoHelper.Helpers;
 using NR = global::NReco.VideoInfo;
 
@@ -14,17 +13,20 @@ namespace DoenaSoft.MediaInfoHelper.Readers
     /// </summary>
     public sealed class VideoReader
     {
-        private readonly bool _manualInput;
+        public delegate uint GetRunningTime();
+
+        private readonly GetRunningTime _getRunningTime;
 
         private readonly MediaFile _mediaFile;
 
         /// <summary />
         /// <param name="mediaFile">the media file</param>
         /// <param name="manualInput">whether or not the user shall be shown an input form for the video length if it cannot be determined automatically</param>
-        public VideoReader(MediaFile mediaFile, bool manualInput)
+        public VideoReader(MediaFile mediaFile
+            , GetRunningTime getRunningTime = null)
         {
             _mediaFile = mediaFile;
-            _manualInput = manualInput;
+            _getRunningTime = getRunningTime;
         }
 
         /// <summary>
@@ -43,9 +45,14 @@ namespace DoenaSoft.MediaInfoHelper.Readers
                 || _mediaFile.FileName.EndsWith(Constants.YoutubeFileExtension)
                 || _mediaFile.FileName.EndsWith(Constants.ManualFileExtension))
             {
-                seconds = _mediaFile.LengthSpecified
-                   ? _mediaFile.Length
-                   : this.GetUserInput();
+                if (_mediaFile.LengthSpecified)
+                {
+                    seconds = _mediaFile.Length;
+                }
+                else if (_getRunningTime != null)
+                {
+                    seconds = _getRunningTime();
+                }
             }
             else if (File.Exists(_mediaFile.FileName))
             {
@@ -90,21 +97,6 @@ namespace DoenaSoft.MediaInfoHelper.Readers
             return isValid;
         }
 
-        private uint GetUserInput()
-        {
-            if (!_manualInput)
-            {
-                return 0;
-            }
-
-            using (var timeForm = new TimeForm(_mediaFile.FileName))
-            {
-                timeForm.ShowDialog();
-
-                return timeForm.Time;
-            }
-        }
-
         private uint GetLengthFromFile()
         {
             var videoLength = this.GetLengthFromMeta();
@@ -127,7 +119,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
             {
                 try
                 {
-                    var info = XmlSerializer<Doc>.Deserialize(xmlFile);
+                    var info = XmlSerializer<VideoInfoDocument>.Deserialize(xmlFile);
 
                     return info.VideoInfo.Duration;
                 }

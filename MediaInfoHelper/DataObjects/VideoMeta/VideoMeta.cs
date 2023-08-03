@@ -20,8 +20,8 @@ namespace DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]
-    public partial class Doc {
+    [System.Xml.Serialization.XmlRootAttribute("doc", Namespace="", IsNullable=false)]
+    public partial class VideoInfoDocument {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]

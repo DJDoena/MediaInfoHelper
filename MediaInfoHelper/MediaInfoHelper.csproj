@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataObjects\Mp3Meta\BookRole.cs" />
     <Compile Include="Readers\AudioReader.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\DateTimeConformer.cs" />
@@ -114,12 +115,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\XmlSerializerT.cs" />
-    <Compile Include="Forms\TimeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TimeForm.Designer.cs">
-      <DependentUpon>TimeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="DataObjects\TimeParts.cs" />
     <Compile Include="DataObjects\VideoMeta\VideoMeta.cs">
@@ -144,11 +139,6 @@
     <None Include="DataObjects\VideoMeta\VideoMeta.xsd">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Forms\TimeForm.resx">
-      <DependentUpon>TimeForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NReco.VideoInfo">

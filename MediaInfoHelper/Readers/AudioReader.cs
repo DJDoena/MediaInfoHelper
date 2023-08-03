@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DoenaSoft.MediaInfoHelper.DataObjects;
+using DoenaSoft.MediaInfoHelper.DataObjects.Mp3Meta;
 using DoenaSoft.MediaInfoHelper.DataObjects.Mp3MetaXml;
 using DoenaSoft.MediaInfoHelper.Helpers;
 using NA = global::NAudio.Wave;
@@ -14,19 +15,32 @@ namespace DoenaSoft.MediaInfoHelper.Readers
     /// <summary />
     public sealed class AudioReader
     {
-        private readonly bool _manualInput;
+        public delegate BookRole GetRole(string bookTitle, string person);
 
-        private readonly Action<string> _logger;
+        public delegate string GetAuthor(string bookTitle);
 
-        private readonly object _lock;
+        public delegate string GetNarrator(string bookTitle);
+
+        public delegate void Log(string message);
+
+        private readonly GetRole _getRole;
+
+        private readonly GetAuthor _getAuthor;
+
+        private readonly GetNarrator _getNarrator;
+
+        private readonly Log _log;
 
         /// <summary />
-        public AudioReader(bool manualInput, Action<string> logger)
+        public AudioReader(GetRole getRole = null
+            , GetAuthor getAuthor = null
+            , GetNarrator getNarrator = null
+            , Log log = null)
         {
-            _manualInput = manualInput;
-            _logger = logger;
-
-            _lock = new object();
+            _getRole = getRole;
+            _getAuthor = getAuthor;
+            _getNarrator = getNarrator;
+            _log = log;
         }
 
         /// <summary/>
@@ -68,7 +82,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
 
             foreach (var file in files)
             {
-                _logger($"Processing '{file.Name}'.");
+                _log?.Invoke($"Processing '{file.Name}'.");
 
                 using (var reader = new NA.MediaFoundationReader(file.FullName))
                 {
@@ -84,7 +98,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
         /// <summary/>
         public TimeParts GetLength(FileInfo file)
         {
-            _logger($"Processing '{file.Name}'.");
+            _log?.Invoke($"Processing '{file.Name}'.");
 
             using (var reader = new NA.MediaFoundationReader(file.FullName))
             {
@@ -161,7 +175,7 @@ namespace DoenaSoft.MediaInfoHelper.Readers
 
                 var narrators = new List<string>();
 
-                if (_manualInput)
+                if (_getRole != null || _getAuthor != null || _getNarrator != null)
                 {
                     GetPeople(people, bookName, authors, narrators);
                 }
@@ -189,71 +203,42 @@ namespace DoenaSoft.MediaInfoHelper.Readers
 
         private void GetPeople(List<string> people, string bookName, List<string> authors, List<string> narrators)
         {
-            foreach (var p in people)
+            if (_getRole != null)
             {
-                var answer = string.Empty;
-
-                lock (_lock)
+                foreach (var person in people)
                 {
-                    while (answer != "a" && answer != "n" && answer != "b")
-                    {
-                        Console.Write($"Is {p} (a)uthor, (n)arrator or (b) for '{bookName}'? ");
+                    var bookRole = _getRole(bookName, person);
 
-                        answer = Console.ReadLine();
+                    if ((bookRole & BookRole.Author) == BookRole.Author)
+                    {
+                        authors.Add(person);
+                    }
+
+                    if ((bookRole & BookRole.Narrator) == BookRole.Narrator)
+                    {
+                        narrators.Add(person);
                     }
                 }
+            }
 
-                switch (answer)
+            if (authors.Count == 0 && _getAuthor != null)
+            {
+                var author = _getAuthor(bookName);
+
+                if (!string.IsNullOrWhiteSpace(author))
                 {
-                    case "a":
-                        {
-                            authors.Add(p);
-
-                            break;
-                        }
-                    case "n":
-                        {
-                            narrators.Add(p);
-
-                            break;
-                        }
-                    case "b":
-                        {
-                            authors.Add(p);
-
-                            narrators.Add(p);
-
-                            break;
-                        }
+                    authors.Add(author);
                 }
             }
 
-            if (authors.Count == 0)
+            if (narrators.Count == 0 && _getNarrator != null)
             {
-                var answer = string.Empty;
+                var narrator = _getNarrator(bookName);
 
-                lock (_lock)
+                if (!string.IsNullOrWhiteSpace(narrator))
                 {
-                    Console.Write($"No author found for '{bookName}'. Please enter author: ");
-
-                    answer = Console.ReadLine();
+                    narrators.Add(narrator);
                 }
-
-                authors.Add(answer);
-            }
-
-            if (narrators.Count == 0)
-            {
-                var answer = string.Empty;
-
-                lock (_lock)
-                {
-                    Console.Write($"No narrator found for '{bookName}'. Please enter narrator: ");
-
-                    answer = Console.ReadLine();
-                }
-
-                narrators.Add(answer);
             }
         }
 
