@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>DoenaSoft.MediaInfoHelper</id>
-		<version>3.0.4</version>
+		<version>3.0.5</version>
 		<title>DoenaSoft.MediaInfoHelper</title>
 		<authors>DJ Doena</authors>
 		<icon>images\djdsoft.png</icon>
@@ -14,7 +14,7 @@
 		<tags>ffprobe, video-files</tags>
 		<dependencies>
 			<dependency id="NReco.VideoInfo" version="1.2.0" />
-			<dependency id="NAudio" version="2.1.0" />
+			<dependency id="NAudio" version="2.2.0" />
 			<dependency id="taglib" version="2.1.0" />
 		</dependencies>
 	</metadata>
