@@ -62,6 +62,19 @@ namespace DoenaSoft.MediaInfoHelper.Readers
         /// <summary/>
         public void CreateXml(DirectoryInfo folder, string metaFileName, string filePattern = "*.mp3")
         {
+            var meta = this.GetMeta(folder, filePattern);
+
+            if (meta == null)
+            {
+                return;
+            }
+
+            XmlSerializer<AudioBookMeta>.Serialize(metaFileName, meta);
+        }
+
+        /// <summary/>
+        public AudioBookMeta GetMeta(DirectoryInfo folder, string filePattern = "*.mp3")
+        {
             var files = folder
                .GetFiles(filePattern, SearchOption.AllDirectories)
                .OrderBy(fi => fi.FullName)
@@ -69,14 +82,14 @@ namespace DoenaSoft.MediaInfoHelper.Readers
 
             if (files.Count == 0)
             {
-                return;
+                return null;
             }
 
             var length = this.GetLength(files);
 
             var meta = GetTagMeta(files[0], length);
 
-            XmlSerializer<AudioBookMeta>.Serialize(metaFileName, meta);
+            return meta;
         }
 
         private TimeParts GetLength(List<FileInfo> files)
