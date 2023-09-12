@@ -20,8 +20,8 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>ffprobe, video-files</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>3.1.0</Version>
-		<FileVersion>3.1.0</FileVersion>
+		<Version>3.1.1</Version>
+		<FileVersion>3.1.1</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -51,7 +51,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="NReco.VideoInfo" Version="1.2.0" />
-		<PackageReference Include="NAudio" Version="2.2.0" />
+		<PackageReference Include="NAudio" Version="2.2.1" />
 		<PackageReference Include="taglib" Version="2.1.0" />
 	</ItemGroup>
 
