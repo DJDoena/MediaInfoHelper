@@ -9,7 +9,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>DoenaSoft.MediaInfoHelper.snk</AssemblyOriginatorKeyFile>
-		<Title>DoenaSoft.DoenaSoft.MediaInfoHelper</Title>
+		<Title>DoenaSoft.MediaInfoHelper</Title>
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Description>Library to query audio and video files for their meta information</Description>
