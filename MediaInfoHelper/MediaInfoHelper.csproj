@@ -13,7 +13,7 @@
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Description>Library to query audio and video files for their meta information</Description>
-		<Copyright>2019 - 2023</Copyright>
+		<Copyright>Copyright © Doena Soft.2019 - 2023</Copyright>
 		<PackageProjectUrl>https://github.com/DJDoena/MediaInfoHelper</PackageProjectUrl>
 		<PackageIcon>djdsoft.png</PackageIcon>
 		<RepositoryUrl>https://github.com/DJDoena/MediaInfoHelper</RepositoryUrl>
@@ -31,15 +31,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="DataObjects\AudioBookMeta\AudioBookMeta.xsd">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="DataObjects\FFProbeMeta\FFProbeMeta.xsd">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="DataObjects\VideoMeta\VideoMeta.xsd">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Content>
+	  <Content Include="DataObjects\AudioBookMeta\AudioBookMeta.xsd" />
+	  <Content Include="DataObjects\FFProbeMeta\FFProbeMeta.xsd" />
+	  <Content Include="DataObjects\VideoMeta\VideoMeta.xsd" />
 	</ItemGroup>
 
 	<ItemGroup>
