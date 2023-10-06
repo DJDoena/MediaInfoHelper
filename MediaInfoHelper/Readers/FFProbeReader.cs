@@ -79,7 +79,7 @@ namespace DoenaSoft.MediaInfoHelper.Reader
 
         private static IEnumerable<FFProbeMeta> GetIdxSubSubtitleMediaInfo(FileInfo fileInfo, string baseName)
         {
-            var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.sup", SearchOption.TopDirectoryOnly);
+            var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.sub", SearchOption.TopDirectoryOnly);
 
             var result = subtitleFiles
                 .Select(TryGetIdxSubSubtitleMediaInfo)

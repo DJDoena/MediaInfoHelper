@@ -20,8 +20,8 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>ffprobe, video-files</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>3.1.1</Version>
-		<FileVersion>3.1.1</FileVersion>
+		<Version>3.1.2</Version>
+		<FileVersion>3.1.2</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
