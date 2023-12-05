@@ -20,9 +20,9 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>ffprobe, video-files</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>3.1.4</Version>
-		<FileVersion>3.1.4</FileVersion>
-		<DebugType>full</DebugType>
+		<Version>3.1.5</Version>
+		<FileVersion>3.1.6</FileVersion>
+		<DebugType>portable</DebugType>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
