@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaInfoHelper", "MediaInfoHelper\MediaInfoHelper.csproj", "{B6F830C3-6F73-4096-AEBE-07814018814B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{B6C36B11-567C-466E-8888-45DD92C1CC57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaInfoHelper.Tests", "MediaInfoHelper.Tests\MediaInfoHelper.Tests.csproj", "{9FD80A27-0B21-4ED7-AF25-15EFCCDEEC88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +17,10 @@ Global
 		{B6F830C3-6F73-4096-AEBE-07814018814B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6F830C3-6F73-4096-AEBE-07814018814B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6F830C3-6F73-4096-AEBE-07814018814B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6C36B11-567C-466E-8888-45DD92C1CC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6C36B11-567C-466E-8888-45DD92C1CC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6C36B11-567C-466E-8888-45DD92C1CC57}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD80A27-0B21-4ED7-AF25-15EFCCDEEC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD80A27-0B21-4ED7-AF25-15EFCCDEEC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD80A27-0B21-4ED7-AF25-15EFCCDEEC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD80A27-0B21-4ED7-AF25-15EFCCDEEC88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

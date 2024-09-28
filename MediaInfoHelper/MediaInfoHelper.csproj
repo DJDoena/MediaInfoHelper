@@ -1,30 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<AssemblyName>DoenaSoft.MediaInfoHelper</AssemblyName>
+		<RootNamespace>DoenaSoft.MediaInfoHelper</RootNamespace>
+		<OutputType>Library</OutputType>
 		<TargetFrameworks>net472</TargetFrameworks>
 		<Platforms>AnyCPU</Platforms>
-		<OutputType>Library</OutputType>
-		<RootNamespace>DoenaSoft.MediaInfoHelper</RootNamespace>
-		<AssemblyName>DoenaSoft.MediaInfoHelper</AssemblyName>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<DebugType>portable</DebugType>
+		<IncludeSymbols>true</IncludeSymbols>
+		<LangVersion>10.0</LangVersion>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>DoenaSoft.MediaInfoHelper.snk</AssemblyOriginatorKeyFile>
 		<Title>DoenaSoft.MediaInfoHelper</Title>
-		<Company>Doena Soft.</Company>
-		<Authors>DJ Doena</Authors>
-		<Description>Library to query audio and video files for their meta information</Description>
-		<Copyright>Copyright © Doena Soft.2019 - 2023</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/DJDoena/MediaInfoHelper</PackageProjectUrl>
-		<PackageIcon>djdsoft.png</PackageIcon>
 		<RepositoryUrl>https://github.com/DJDoena/MediaInfoHelper</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>ffprobe, video-files</PackageTags>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>3.1.5</Version>
-		<FileVersion>3.1.6</FileVersion>
-		<DebugType>portable</DebugType>
-		<IncludeSymbols>true</IncludeSymbols>
+		<PackageIcon>djdsoft.png</PackageIcon>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Description>Library to query audio and video files for their meta information</Description>
+		<Company>Doena Soft.</Company>
+		<Authors>DJ Doena</Authors>
+		<Copyright>Copyright © Doena Soft. 2019 - 2024</Copyright>
+		<Version>3.1.6</Version>
+		<FileVersion>3.1.6</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -47,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.1" />
 		<PackageReference Include="NReco.VideoInfo" Version="1.2.0" />
 		<PackageReference Include="NAudio" Version="2.2.1" />
 		<PackageReference Include="taglib" Version="2.1.0" />

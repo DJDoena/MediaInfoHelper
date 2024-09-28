@@ -1,63 +1,62 @@
-﻿namespace DoenaSoft.MediaInfoHelper.DataObjects
+﻿namespace DoenaSoft.MediaInfoHelper.DataObjects;
+
+/// <summary/>
+public readonly struct TimeParts
 {
     /// <summary/>
-    public readonly struct TimeParts
+    public ulong Days { get; }
+
+    /// <summary/>
+    public ushort Hours { get; }
+
+    /// <summary/>
+    public ushort Minutes { get; }
+
+    /// <summary/>
+    public ushort Seconds { get; }
+
+    /// <summary/>
+    public TimeParts(ulong days, ushort hours, ushort minutes, ushort seconds)
     {
-        /// <summary/>
-        public ulong Days { get; }
+        this.Days = days;
+        this.Hours = hours;
+        this.Minutes = minutes;
+        this.Seconds = seconds;
+    }
 
-        /// <summary/>
-        public ushort Hours { get; }
+    /// <summary/>
+    public void Deconstruct(out ulong days, out ushort hours, out ushort minutes, out ushort seconds)
+    {
+        days = this.Days;
+        hours = this.Hours;
+        minutes = this.Minutes;
+        seconds = this.Seconds;
+    }
 
-        /// <summary/>
-        public ushort Minutes { get; }
+    /// <summary/>
+    public void Deconstruct(out ulong days, out ushort hours, out ushort minutes)
+    {
+        days = this.Days;
+        hours = this.Hours;
+        minutes = this.Minutes;
 
-        /// <summary/>
-        public ushort Seconds { get; }
-
-        /// <summary/>
-        public TimeParts(ulong days, ushort hours, ushort minutes, ushort seconds)
+        if (this.Seconds >= 30)
         {
-            this.Days = days;
-            this.Hours = hours;
-            this.Minutes = minutes;
-            this.Seconds = seconds;
+            minutes++;
         }
 
-        /// <summary/>
-        public void Deconstruct(out ulong days, out ushort hours, out ushort minutes, out ushort seconds)
+        if (minutes == 60)
         {
-            days = this.Days;
-            hours = this.Hours;
-            minutes = this.Minutes;
-            seconds = this.Seconds;
+            minutes = 0;
+
+            hours++;
         }
 
-        /// <summary/>
-        public void Deconstruct(out ulong days, out ushort hours, out ushort minutes)
+        if (hours == 24)
         {
-            days = this.Days;
-            hours = this.Hours;
-            minutes = this.Minutes;
+            hours = 0;
 
-            if (this.Seconds >= 30)
-            {
-                minutes++;
-            }
-
-            if (minutes == 60)
-            {
-                minutes = 0;
-
-                hours++;
-            }
-
-            if (hours == 24)
-            {
-                hours = 0;
-
-                days++;
-            }
+            days++;
         }
     }
 }
