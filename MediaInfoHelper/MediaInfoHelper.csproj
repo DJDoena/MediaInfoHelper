@@ -10,7 +10,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<DebugType>portable</DebugType>
 		<IncludeSymbols>true</IncludeSymbols>
-		<LangVersion>10.0</LangVersion>
+		<LangVersion>12.0</LangVersion>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>DoenaSoft.MediaInfoHelper.snk</AssemblyOriginatorKeyFile>
 		<Title>DoenaSoft.MediaInfoHelper</Title>
@@ -24,9 +24,9 @@
 		<Description>Library to query audio and video files for their meta information</Description>
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
-		<Copyright>Copyright © Doena Soft. 2019 - 2024</Copyright>
-		<Version>3.1.6</Version>
-		<FileVersion>3.1.6</FileVersion>
+		<Copyright>Copyright © Doena Soft. 2019 - 2025</Copyright>
+		<Version>3.1.7</Version>
+		<FileVersion>3.1.7</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

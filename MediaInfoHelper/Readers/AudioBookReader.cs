@@ -56,6 +56,10 @@ public sealed class AudioBookReader
     }
 
     /// <summary/>
+    public TimeParts GetLength(string folderName, string filePattern = "*.mp3")
+        => this.GetLength(new DirectoryInfo(folderName), filePattern);
+
+    /// <summary/>
     public void CreateXml(DirectoryInfo folder, string metaFileName, string filePattern = "*.mp3")
     {
         var meta = this.GetMeta(folder, filePattern);
@@ -67,6 +71,10 @@ public sealed class AudioBookReader
 
         XmlSerializer<AbmXml.AudioBookMeta>.Serialize(metaFileName, meta);
     }
+
+    /// <summary/>
+    public void CreateXml(string folderName, string metaFileName, string filePattern = "*.mp3")
+        => this.CreateXml(new DirectoryInfo(folderName), metaFileName, filePattern);
 
     /// <summary/>
     public AbmXml.AudioBookMeta GetMeta(DirectoryInfo folder, string filePattern = "*.mp3")
@@ -88,7 +96,12 @@ public sealed class AudioBookReader
         return meta;
     }
 
-    private TimeParts GetLength(List<FileInfo> files)
+    /// <summary/>
+    public AbmXml.AudioBookMeta GetMeta(string folderName, string filePattern = "*.mp3")
+        => this.GetMeta(new DirectoryInfo(folderName), filePattern);
+
+    /// <summary/>
+    public TimeParts GetLength(IEnumerable<FileInfo> files)
     {
         var totalLength = new TimeSpan(0);
 
@@ -96,10 +109,9 @@ public sealed class AudioBookReader
         {
             _log?.Invoke($"Processing '{file.Name}'.");
 
-            using (var reader = new NA.MediaFoundationReader(file.FullName))
-            {
-                totalLength += reader.TotalTime;
-            }
+            using var reader = new NA.MediaFoundationReader(file.FullName);
+
+            totalLength += reader.TotalTime;
         }
 
         var length = GetLength(totalLength);
@@ -108,17 +120,24 @@ public sealed class AudioBookReader
     }
 
     /// <summary/>
+    public TimeParts GetLength(IEnumerable<string> fileNames)
+        => this.GetLength(fileNames.Select(fileName => new FileInfo(fileName)));
+
+    /// <summary/>
     public TimeParts GetLength(FileInfo file)
     {
         _log?.Invoke($"Processing '{file.Name}'.");
 
-        using (var reader = new NA.MediaFoundationReader(file.FullName))
-        {
-            var length = GetLength(reader.TotalTime);
+        using var reader = new NA.MediaFoundationReader(file.FullName);
 
-            return length;
-        }
+        var length = GetLength(reader.TotalTime);
+
+        return length;
     }
+
+    /// <summary/>
+    public TimeParts GetLength(string fileName)
+        => this.GetLength(new FileInfo(fileName));
 
     private static TimeParts GetLength(TimeSpan totalLength)
     {
@@ -166,51 +185,50 @@ public sealed class AudioBookReader
 
     private AbmXml.AudioBookMeta GetTagMeta(FileInfo file, TimeParts length)
     {
-        using (var fileMeta = TL.File.Create(file.FullName))
-        {
-            var tag = fileMeta?.Tag;
+        using var fileMeta = TL.File.Create(file.FullName);
 
-            var meta = new AbmXml.AudioBookMeta();
+        var tag = fileMeta?.Tag;
+
+        var meta = new AbmXml.AudioBookMeta();
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            var people = (tag.AlbumArtists?.SelectMany(a => Split(a)) ?? Enumerable.Empty<string>())
-                .Union(tag.Performers?.SelectMany(p => Split(p)) ?? Enumerable.Empty<string>())
-                .Union(tag.Artists?.SelectMany(p => Split(p)) ?? Enumerable.Empty<string>())
-                .ToList();
+        var people = (tag.AlbumArtists?.SelectMany(Split) ?? [])
+            .Union(tag.Performers?.SelectMany(Split) ?? [])
+            .Union(tag.Artists?.SelectMany(Split) ?? [])
+            .ToList();
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            var bookName = !string.IsNullOrWhiteSpace(tag.Album)
-                ? tag.Album
-                : file.Directory.Name;
+        var bookName = !string.IsNullOrWhiteSpace(tag.Album)
+            ? tag.Album
+            : file.Directory.Name;
 
-            var authors = new List<string>();
+        var authors = new List<string>();
 
-            var narrators = new List<string>();
+        var narrators = new List<string>();
 
-            if (_getRole != null || _getAuthor != null || _getNarrator != null)
-            {
-                this.GetPeople(people, bookName, authors, narrators);
-            }
-
-            if (tag != null)
-            {
-                meta.Title = bookName;
-                meta.Author = authors.ToArray();
-                meta.Narrator = narrators.ToArray();
-                meta.Genre = tag.Genres?.SelectMany(g => Split(g)).ToArray();
-                meta.Description = GetDescription(tag);
-            }
-
-            meta.RunningTime = new AbmXml.RunningTime()
-            {
-                Hours = (length.Days * 24) + length.Hours,
-                Minutes = length.Minutes,
-                Seconds = length.Seconds,
-                Value = $"{length.Hours}:{length.Minutes:D2}:{length.Seconds:D2}",
-            };
-
-            return meta;
+        if (_getRole != null || _getAuthor != null || _getNarrator != null)
+        {
+            this.GetPeople(people, bookName, authors, narrators);
         }
+
+        if (tag != null)
+        {
+            meta.Title = bookName;
+            meta.Author = [.. authors];
+            meta.Narrator = [.. narrators];
+            meta.Genre = tag.Genres?.SelectMany(Split).ToArray();
+            meta.Description = GetDescription(tag);
+        }
+
+        meta.RunningTime = new AbmXml.RunningTime()
+        {
+            Hours = (length.Days * 24) + length.Hours,
+            Minutes = length.Minutes,
+            Seconds = length.Seconds,
+            Value = $"{length.Hours}:{length.Minutes:D2}:{length.Seconds:D2}",
+        };
+
+        return meta;
     }
 
     private void GetPeople(List<string> people, string bookName, List<string> authors, List<string> narrators)
@@ -295,5 +313,5 @@ public sealed class AudioBookReader
     #endregion
 
     private static IEnumerable<string> Split(string text)
-        => text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim());
+        => text.Split([','], StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim());
 }
