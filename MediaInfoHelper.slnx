@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MediaInfoHelper.Tests/MediaInfoHelper.Tests.csproj" />
+  <Project Path="MediaInfoHelper/MediaInfoHelper.csproj" />
+</Solution>
