@@ -25,20 +25,20 @@
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Copyright>Copyright © Doena Soft. 2019 - 2025</Copyright>
-		<Version>3.1.8</Version>
-		<FileVersion>3.1.8</FileVersion>
+		<Version>3.1.9</Version>
+		<FileVersion>3.1.9</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="DataObjects\AudioBookMeta\AudioBookMeta.xsd" />
-	  <None Remove="DataObjects\FFProbeMeta\FFProbeMeta.xsd" />
-	  <None Remove="DataObjects\VideoMeta\VideoMeta.xsd" />
+		<None Remove="DataObjects\AudioBookMeta\AudioBookMeta.xsd" />
+		<None Remove="DataObjects\FFProbeMeta\FFProbeMeta.xsd" />
+		<None Remove="DataObjects\VideoMeta\VideoMeta.xsd" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="DataObjects\AudioBookMeta\AudioBookMeta.xsd" />
-	  <Content Include="DataObjects\FFProbeMeta\FFProbeMeta.xsd" />
-	  <Content Include="DataObjects\VideoMeta\VideoMeta.xsd" />
+		<Content Include="DataObjects\AudioBookMeta\AudioBookMeta.xsd" />
+		<Content Include="DataObjects\FFProbeMeta\FFProbeMeta.xsd" />
+		<Content Include="DataObjects\VideoMeta\VideoMeta.xsd" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -49,10 +49,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.2" />
+		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.3" />
 		<PackageReference Include="NReco.VideoInfo" Version="1.2.1" />
 		<PackageReference Include="NAudio" Version="2.2.1" />
 		<PackageReference Include="taglib" Version="2.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="DataObjects\VideoMeta\VideoMeta.NotGenerated.cs">
+			<DependentUpon>VideoMeta.xsd</DependentUpon>
+		</Compile>
+		<Compile Update="DataObjects\AudioBookMeta\AudioBookMeta.NotGenerated.cs">
+			<DependentUpon>AudioBookMeta.xsd</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 </Project>
