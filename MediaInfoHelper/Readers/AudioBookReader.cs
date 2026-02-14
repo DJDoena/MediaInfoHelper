@@ -253,21 +253,25 @@ public sealed class AudioBookReader
 
         if (authors.Count == 0 && _getAuthor != null)
         {
-            var author = _getAuthor(bookName);
+            var authorReply = _getAuthor(bookName);
 
-            if (!string.IsNullOrWhiteSpace(author))
+            if (!string.IsNullOrWhiteSpace(authorReply))
             {
-                authors.Add(author);
+                var authorNames = Split(authorReply);
+
+                authors.Add(authorReply);
             }
         }
 
         if (narrators.Count == 0 && _getNarrator != null)
         {
-            var narrator = _getNarrator(bookName);
+            var narratorReply = _getNarrator(bookName);
 
-            if (!string.IsNullOrWhiteSpace(narrator))
+            if (!string.IsNullOrWhiteSpace(narratorReply))
             {
-                narrators.Add(narrator);
+                var narratorNames = Split(narratorReply);
+
+                narrators.AddRange(narratorNames);
             }
         }
     }
