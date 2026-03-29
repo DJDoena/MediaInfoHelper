@@ -10,7 +10,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<DebugType>portable</DebugType>
 		<IncludeSymbols>true</IncludeSymbols>
-		<LangVersion>lastest</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>DoenaSoft.MediaInfoHelper.snk</AssemblyOriginatorKeyFile>
 		<Title>DoenaSoft.MediaInfoHelper</Title>
