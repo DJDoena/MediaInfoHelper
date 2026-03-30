@@ -26,8 +26,8 @@
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Copyright>Copyright © Doena Soft. 2019 - 2026</Copyright>
-		<Version>3.1.11</Version>
-		<FileVersion>3.1.11</FileVersion>
+		<Version>3.1.12</Version>
+		<FileVersion>3.1.12</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -54,9 +54,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.3" />
+		<PackageReference Include="DoenaSoft.ToolBox" Version="3.0.4" />
 		<PackageReference Include="NReco.VideoInfo" Version="1.2.1" />
-		<PackageReference Include="NAudio" Version="2.2.1" />
+		<PackageReference Include="NAudio" Version="2.3.0" />
 		<PackageReference Include="taglib" Version="2.1.0" />
 	</ItemGroup>
 
