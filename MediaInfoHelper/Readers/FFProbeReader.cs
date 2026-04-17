@@ -2,7 +2,7 @@
 using FfpXml = DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
 using NR = global::NReco.VideoInfo;
 
-namespace DoenaSoft.MediaInfoHelper.Reader;
+namespace DoenaSoft.MediaInfoHelper.Readers;
 
 /// <summary/>
 public static class FFProbeReader

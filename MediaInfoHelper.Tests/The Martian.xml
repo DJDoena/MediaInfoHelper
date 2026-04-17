@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xml" href="#stylesheet"?>
+<!DOCTYPE doc [
+<!ATTLIST xsl:stylesheet
+    id    ID    #REQUIRED>
+]>
+<doc>
+	﻿<Mp3Meta>
+		<Title>The Martian</Title>
+		<Author>Andy Weir</Author>
+		<Narrator>Wil Wheaton</Narrator>
+		<Genre>Audiobook</Genre>
+		<Description>Read by Wil Wheaton</Description>
+		<RunningTime Hours="10" Minutes="59" Seconds="22">10:59:22</RunningTime>
+	</Mp3Meta>
+	<xsl:stylesheet id="stylesheet" version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">		
+		<xsl:template name="PrintItem">
+			<xsl:param name="item" />
+			<li>
+				<xsl:value-of select="text()"/>	
+			</li>
+		</xsl:template>
+				
+		<xsl:template name="PrintItems">
+			<xsl:param name="section" />
+			<xsl:param name="items" />
+			<xsl:if test="count($items) > 0">
+			    <h2><xsl:value-of select="$section"/></h2>
+				<ul>
+					<xsl:for-each select="$items">
+						<xsl:call-template name="PrintItem">
+							<xsl:with-param name="item" select="current()" />
+						</xsl:call-template>	
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+		</xsl:template>
+
+		<xsl:template match="/">
+			<html>
+				<body>
+					<h1><xsl:value-of select="//doc/Mp3Meta/Title"/></h1>
+					<xsl:choose>
+						<xsl:when test="//doc/Mp3Meta/Description != ''">
+							<p><xsl:value-of select="//doc/Mp3Meta/Description"/></p>
+						</xsl:when>
+					</xsl:choose>
+					<xsl:call-template name="PrintItems">
+						<xsl:with-param name="section" select="'Autor'" />
+						<xsl:with-param name="items" select="//doc/Mp3Meta/Author" />
+					</xsl:call-template>
+					<xsl:call-template name="PrintItems">
+						<xsl:with-param name="section" select="'Erzähler'" />
+						<xsl:with-param name="items" select="//doc/Mp3Meta/Narrator" />
+					</xsl:call-template>
+					<xsl:call-template name="PrintItems">
+						<xsl:with-param name="section" select="'Genre'" />
+						<xsl:with-param name="items" select="//doc/Mp3Meta/Genre" />
+					</xsl:call-template>
+					<h2>Laufzeit</h2>
+					<xsl:value-of select="//doc/Mp3Meta/RunningTime"/>
+				</body>
+			</html>
+		</xsl:template>
+	</xsl:stylesheet>
+</doc>
