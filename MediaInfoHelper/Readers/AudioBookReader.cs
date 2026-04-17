@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using DoenaSoft.MediaInfoHelper.DataObjects;
-using DoenaSoft.ToolBox.Generics;
+using DoenaSoft.MediaInfoHelper.Writers;
 using AbmXml = DoenaSoft.MediaInfoHelper.DataObjects.AudioBookMetaXml;
 using NA = global::NAudio.Wave;
 using TL = global::TagLib;
@@ -69,7 +69,7 @@ public sealed class AudioBookReader
             return;
         }
 
-        XmlSerializer<AbmXml.AudioBookMeta>.Serialize(metaFileName, meta);
+        MetaWriter.WriteAudioBookMeta(meta, metaFileName);
     }
 
     /// <summary/>

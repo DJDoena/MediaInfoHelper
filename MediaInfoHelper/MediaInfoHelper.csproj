@@ -26,8 +26,8 @@
 		<Company>Doena Soft.</Company>
 		<Authors>DJ Doena</Authors>
 		<Copyright>Copyright © Doena Soft. 2019 - 2026</Copyright>
-		<Version>3.2.0</Version>
-		<FileVersion>3.2.0</FileVersion>
+		<Version>3.2.1</Version>
+		<FileVersion>3.2.1</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

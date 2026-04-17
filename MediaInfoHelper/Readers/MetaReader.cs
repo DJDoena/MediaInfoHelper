@@ -5,8 +5,10 @@ using DoenaSoft.ToolBox.Generics;
 
 namespace DoenaSoft.MediaInfoHelper.Readers;
 
+/// <summary/>
 public static class MetaReader
 {
+    /// <summary/>
     public static VideoMeta ReadVideoMetaDocument(string fileName)
     {
         using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -23,6 +25,7 @@ public static class MetaReader
         return doc.VideoInfo;
     }
 
+    /// <summary/>
     public static VideoMeta ReadVideoMeta(string fileName)
     {
         var videoMeta = XmlSerializer<VideoMeta>.Deserialize(fileName);
@@ -30,6 +33,7 @@ public static class MetaReader
         return videoMeta;
     }
 
+    /// <summary/>
     public static AudioBookMeta ReadAudioBookMetaDocument(string fileName)
     {
         using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -46,6 +50,7 @@ public static class MetaReader
         return doc.Mp3Meta;
     }
 
+    /// <summary/>
     public static AudioBookMeta ReadAudioBookMeta(string fileName)
     {
         var audioMeta = XmlSerializer<AudioBookMeta>.Deserialize(fileName);
