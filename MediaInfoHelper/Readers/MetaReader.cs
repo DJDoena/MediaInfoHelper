@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using DoenaSoft.MediaInfoHelper.DataObjects.AudioBookMetaXml;
+using DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
 using DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
 using DoenaSoft.ToolBox.Generics;
 
@@ -56,5 +57,13 @@ public static class MetaReader
         var audioMeta = XmlSerializer<AudioBookMeta>.Deserialize(fileName);
 
         return audioMeta;
+    }
+
+    /// <summary/>
+    public static FFProbeMeta ReadFFProbeMeta(string fileName)
+    {
+        var ffProbeMeta = XmlSerializer<FFProbeMeta>.Deserialize(fileName);
+
+        return ffProbeMeta;
     }
 }
