@@ -15,7 +15,7 @@ public sealed class VideoMetaXsltSerializerDataProvider : IXsltSerializerDataPro
         => "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<?xml-stylesheet type=\"text/xml\" href=\"#stylesheet\"?>\r\n<!DOCTYPE doc [\r\n<!ATTLIST xsl:stylesheet\r\n    id    ID    #REQUIRED>\r\n]>\r\n<doc>";
 
     /// <summary>
-    /// Gets the XML suffix containing the XSLT stylesheet for rendering audiobook metadata.
+    /// Gets the XML suffix containing the XSLT stylesheet for rendering video metadata.
     /// </summary>
     /// <returns>The XML suffix string with embedded XSLT stylesheet.</returns>
     public string GetSuffix()
