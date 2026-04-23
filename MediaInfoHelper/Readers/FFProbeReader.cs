@@ -1,10 +1,14 @@
-﻿using DoenaSoft.ToolBox.Generics;
+﻿using DoenaSoft.MediaInfoHelper.Helpers;
+using DoenaSoft.ToolBox.Generics;
 using FfpXml = DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
 using NR = global::NReco.VideoInfo;
 
 namespace DoenaSoft.MediaInfoHelper.Reader;
 
-/// <summary/>
+/// <summary>
+/// Reads FFProbe metadata from video and subtitle files.
+/// Uses <see cref="MediaInfoConfiguration.SubtitleExtensionProvider"/> for configurable subtitle format detection.
+/// </summary>
 public static class FFProbeReader
 {
     /// <summary>
@@ -44,151 +48,112 @@ public static class FFProbeReader
     private static IEnumerable<FfpXml.FFProbeMeta> GetSubtitleMediaInfo(FileInfo fileInfo)
     {
         var baseName = Path.GetFileNameWithoutExtension(fileInfo.Name);
-
         var result = new List<FfpXml.FFProbeMeta>();
 
-        try
-        {
-            result.AddRange(GetIdxSubSubtitleMediaInfo(fileInfo, baseName));
-        }
-        catch
-        { }
+        var extensions = MediaInfoConfiguration.SubtitleExtensionProvider.GetSubtitleExtensions();
 
-        try
+        foreach (var extension in extensions)
         {
-            result.AddRange(GetIfoSupSubtitleMediaInfo(fileInfo, baseName));
+            try
+            {
+                result.AddRange(GetSubtitleMediaInfoByExtension(fileInfo, baseName, extension));
+            }
+            catch
+            { }
         }
-        catch
-        { }
-
-        try
-        {
-            result.AddRange(GetSrtSubtitleMediaInfo(fileInfo, baseName));
-        }
-        catch
-        { }
 
         return result;
     }
 
-    #region GetIdxSubSubtitleMediaInfo
-
-    private static IEnumerable<FfpXml.FFProbeMeta> GetIdxSubSubtitleMediaInfo(FileInfo fileInfo, string baseName)
+    private static IEnumerable<FfpXml.FFProbeMeta> GetSubtitleMediaInfoByExtension(FileInfo fileInfo, string baseName, string extension)
     {
-        var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.sub", SearchOption.TopDirectoryOnly);
+        var searchPattern = $"{baseName}*.{extension}";
+        var subtitleFiles = fileInfo.Directory.GetFiles(searchPattern, SearchOption.TopDirectoryOnly);
 
         var result = subtitleFiles
-            .Select(TryGetIdxSubSubtitleMediaInfo)
+            .Select(sf => TryGetSubtitleMediaInfo(sf, extension))
             .Where(ff => ff?.streams?.Length > 0);
 
         return result;
     }
 
-    private static FfpXml.FFProbeMeta TryGetIdxSubSubtitleMediaInfo(FileInfo subtitleFile)
+    private static FfpXml.FFProbeMeta TryGetSubtitleMediaInfo(FileInfo subtitleFile, string extension)
     {
-        var subtitleBaseName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
+        // Special handling for idx/sub pairs
+        if (extension.Equals("idx", StringComparison.OrdinalIgnoreCase))
+        {
+            var subtitleBaseName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
+            if (!File.Exists(Path.Combine(subtitleFile.DirectoryName, $"{subtitleBaseName}.sub")))
+            {
+                return null;
+            }
+        }
+        // Special handling for ifo/sup pairs
+        else if (extension.Equals("ifo", StringComparison.OrdinalIgnoreCase))
+        {
+            var subtitleBaseName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
+            if (!File.Exists(Path.Combine(subtitleFile.DirectoryName, $"{subtitleBaseName}.sup")))
+            {
+                return null;
+            }
+        }
+        // Special handling for SRT files (extract language from filename)
+        else if (extension.Equals("srt", StringComparison.OrdinalIgnoreCase))
+        {
+            return TryGetSrtSubtitleMediaInfo(subtitleFile);
+        }
 
-        if (!File.Exists(Path.Combine(subtitleFile.DirectoryName, $"{subtitleBaseName}.sub")))
+        try
+        {
+            var mediaInfo = (new NR.FFProbe()).GetMediaInfo(subtitleFile.FullName);
+            var xml = mediaInfo.Result.CreateNavigator().OuterXml;
+            var ffprobe = XmlSerializer<FfpXml.FFProbeMeta>.FromString(xml);
+            ffprobe.FileName = subtitleFile.Name;
+            return ffprobe;
+        }
+        catch
         {
             return null;
         }
-
-        var mediaInfo = (new NR.FFProbe()).GetMediaInfo(subtitleFile.FullName);
-
-        var xml = mediaInfo.Result.CreateNavigator().OuterXml;
-
-        var ffprobe = XmlSerializer<FfpXml.FFProbeMeta>.FromString(xml);
-
-        ffprobe.FileName = subtitleFile.Name;
-
-        return ffprobe;
     }
 
-    #endregion
-
-    #region GetIfoSupSubtitleMediaInfo
-
-    private static IEnumerable<FfpXml.FFProbeMeta> GetIfoSupSubtitleMediaInfo(FileInfo fileInfo, string baseName)
+    private static FfpXml.FFProbeMeta TryGetSrtSubtitleMediaInfo(FileInfo subtitleFile)
     {
-        var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.sup", SearchOption.TopDirectoryOnly);
-
-        var result = subtitleFiles
-            .Select(TryGetIfoSupSubtitleMediaInfo)
-            .Where(ff => ff?.streams?.Length > 0);
-
-        return result;
-    }
-
-    private static FfpXml.FFProbeMeta TryGetIfoSupSubtitleMediaInfo(FileInfo subtitleFile)
-    {
-        var subtitleBaseName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
-
-        if (!File.Exists(Path.Combine(subtitleFile.DirectoryName, $"{subtitleBaseName}.sup")))
-        {
-            return null;
-        }
-
-        var mediaInfo = (new NR.FFProbe()).GetMediaInfo(subtitleFile.FullName);
-
-        var xml = mediaInfo.Result.CreateNavigator().OuterXml;
-
-        var ffprobe = XmlSerializer<FfpXml.FFProbeMeta>.FromString(xml);
-
-        ffprobe.FileName = subtitleFile.Name;
-
-        return ffprobe;
-    }
-
-    #endregion
-
-    #region GetSrtSubtitleMediaInfo
-
-    private static IEnumerable<FfpXml.FFProbeMeta> GetSrtSubtitleMediaInfo(FileInfo fileInfo, string baseName)
-    {
-        var subtitleFiles = fileInfo.Directory.GetFiles($"{baseName}*.srt", SearchOption.TopDirectoryOnly);
-
-        var result = subtitleFiles
-            .Select(sf => TryGetSrtSubtitleMediaInfo(sf, baseName))
-            .Where(ff => ff?.streams?.Length > 0);
-
-        return result;
-    }
-
-    private static FfpXml.FFProbeMeta TryGetSrtSubtitleMediaInfo(FileInfo subtitleFile, string baseName)
-    {
-        var nameParts = Path.GetFileNameWithoutExtension(subtitleFile.Name)
-            .Replace(baseName, string.Empty)
-            .Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+        var fileName = Path.GetFileNameWithoutExtension(subtitleFile.Name);
+        var nameParts = fileName.Split(new[] { '.', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var namePart in nameParts)
         {
-            switch (namePart.ToLower())
+            var language = TryDetectLanguageFromPart(namePart);
+            if (language != null)
             {
-                case "de":
-                case "deu":
-                case "ger":
-                    {
-                        return CreateSrtProbe(subtitleFile, "ger");
-                    }
-                case "en":
-                case "eng":
-                    {
-                        return CreateSrtProbe(subtitleFile, "eng");
-                    }
-                case "ar":
-                case "ara":
-                    {
-                        return CreateSrtProbe(subtitleFile, "ara");
-                    }
-                case "es":
-                case "spa":
-                    {
-                        return CreateSrtProbe(subtitleFile, "spa");
-                    }
+                return CreateSrtProbe(subtitleFile, language);
             }
         }
 
         return null;
+    }
+
+    private static string TryDetectLanguageFromPart(string namePart)
+    {
+        switch (namePart.ToLower())
+        {
+            case "de":
+            case "deu":
+            case "ger":
+                return "ger";
+            case "en":
+            case "eng":
+                return "eng";
+            case "ar":
+            case "ara":
+                return "ara";
+            case "es":
+            case "spa":
+                return "spa";
+            default:
+                return null;
+        }
     }
 
     private static FfpXml.FFProbeMeta CreateSrtProbe(FileInfo subtitleFile, string language)
@@ -211,6 +176,4 @@ public static class FFProbeReader
                 },
             },
         };
-
-    #endregion
 }

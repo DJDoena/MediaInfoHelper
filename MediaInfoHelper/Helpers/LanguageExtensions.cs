@@ -1,12 +1,16 @@
-﻿using VMXml = DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
+﻿using DoenaSoft.MediaInfoHelper.Contracts;
+using VMXml = DoenaSoft.MediaInfoHelper.DataObjects.VideoMetaXml;
 
 namespace DoenaSoft.MediaInfoHelper.Helpers
 {
-    /// <summary />
+    /// <summary>
+    /// Extension methods for language standardization and manipulation.
+    /// Uses <see cref="MediaInfoConfiguration.LanguageProvider"/> for customizable language handling.
+    /// </summary>
     public static class LanguageExtensions
     {
         /// <summary>
-        /// Standardizes audio track names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// Standardizes audio track languages using the configured <see cref="ILanguageProvider"/> and returns distinct values.
         /// </summary>
         public static IEnumerable<string> GetDistinctLanguages(this IEnumerable<VMXml.Audio> audios)
             => audios?
@@ -15,7 +19,7 @@ namespace DoenaSoft.MediaInfoHelper.Helpers
                 .Distinct();
 
         /// <summary>
-        /// Standardizes subtitle track names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// Standardizes subtitle track languages using the configured <see cref="ILanguageProvider"/> and returns distinct values.
         /// </summary>
         public static IEnumerable<string> GetDistinctLanguages(this IEnumerable<VMXml.Subtitle> sutitles)
             => sutitles?
@@ -24,7 +28,7 @@ namespace DoenaSoft.MediaInfoHelper.Helpers
                 .Distinct();
 
         /// <summary>
-        /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// Standardizes languages for audio tracks using the configured <see cref="ILanguageProvider"/>.
         /// </summary>
         public static IEnumerable<VMXml.Audio> StandardizeLanguage(this IEnumerable<VMXml.Audio> audios)
             => audios?
@@ -41,7 +45,7 @@ namespace DoenaSoft.MediaInfoHelper.Helpers
                 });
 
         /// <summary>
-        /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// Standardizes languages for subtitle tracks using the configured <see cref="ILanguageProvider"/>.
         /// </summary>
         public static IEnumerable<VMXml.Subtitle> StandardizeLanguage(this IEnumerable<VMXml.Subtitle> subtitles)
             => subtitles?
@@ -56,7 +60,7 @@ namespace DoenaSoft.MediaInfoHelper.Helpers
                 });
 
         /// <summary>
-        /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// Standardizes language codes using the configured <see cref="ILanguageProvider"/> and returns distinct values.
         /// </summary>
         public static IEnumerable<string> StandardizeLanguage(this IEnumerable<string> languages)
             => languages?
@@ -65,87 +69,16 @@ namespace DoenaSoft.MediaInfoHelper.Helpers
                 .Distinct();
 
         /// <summary>
-        /// Standardizes language names for German, English, Arabic, Spanish, Japanese and Korean.
+        /// Standardizes language names using the configured <see cref="ILanguageProvider"/>.
         /// </summary>
         public static string StandardizeLanguage(string language)
-        {
-            switch (language?.ToLowerInvariant())
-            {
-                case "de":
-                case "deu":
-                case "ger":
-                    {
-                        return "de";
-                    }
-                case "en":
-                case "eng":
-                    {
-                        return "en";
-                    }
-                case "ar":
-                case "ara":
-                    {
-                        return "ar";
-                    }
-                case "es":
-                case "spa":
-                    {
-                        return "es";
-                    }
-                case "ja":
-                case "jap":
-                case "jpn":
-                    {
-                        return "ja";
-                    }
-                case "ko":
-                case "kor":
-                    {
-                        return "ko";
-                    }
-                default:
-                    {
-                        return language?.ToLower();
-                    }
-            }
-        }
+            => MediaInfoConfiguration.LanguageProvider.StandardizeLanguage(language);
 
         /// <summary>
-        /// Gives weight to languages in order:  German, English, Spanish, Arabic, Japanese, Korean and then everything else.
+        /// Gives weight to languages for sorting using the configured <see cref="ILanguageProvider"/>.
+        /// Lower values indicate higher priority.
         /// </summary>
         public static int GetLanguageWeight(string language)
-        {
-            switch (language?.ToLower())
-            {
-                case "de":
-                    {
-                        return 1;
-                    }
-                case "en":
-                    {
-                        return 2;
-                    }
-                case "es":
-                    {
-                        return 3;
-                    }
-                case "ar":
-                    {
-                        return 4;
-                    }
-                case "ja":
-                    {
-                        return 5;
-                    }
-                case "ko":
-                    {
-                        return 6;
-                    }
-                default:
-                    {
-                        return 10 + Math.Abs(language?.GetHashCode() ?? 0);
-                    }
-            }
-        }
+            => MediaInfoConfiguration.LanguageProvider.GetLanguageWeight(language);
     }
 }

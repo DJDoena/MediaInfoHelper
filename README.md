@@ -1,4 +1,4 @@
-# MediaInfoHelper
+﻿# MediaInfoHelper
 
 A .NET library to query audio and video files for their metadata information.
 
@@ -17,6 +17,8 @@ DoenaSoft.MediaInfoHelper is a comprehensive library that provides easy access t
   - TagLib for tag reading
 - Simple and intuitive API
 - Strongly-typed data objects for media information
+- **Customizable language standardization and weighting**
+- **Configurable subtitle file format detection**
 
 ## Installation
 
@@ -73,6 +75,82 @@ Console.WriteLine($"Hours: {totalLength.Hours}");
 Console.WriteLine($"Minutes: {totalLength.Minutes}");
 Console.WriteLine($"Seconds: {totalLength.Seconds}");
 ```
+
+### Customizing Language Handling
+
+```csharp
+using DoenaSoft.MediaInfoHelper.Helpers;
+
+// Implement your own language provider
+public class CustomLanguageProvider : ILanguageProvider
+{
+    public string StandardizeLanguage(string language)
+    {
+        // Your custom language standardization logic
+        return language?.ToLower();
+    }
+
+    public int GetLanguageWeight(string language)
+    {
+        // Your custom language priority (lower = higher priority)
+        return 100;
+    }
+}
+
+// Configure at application startup
+MediaInfoConfiguration.LanguageProvider = new CustomLanguageProvider();
+```
+
+### Customizing Subtitle Format Detection
+
+```csharp
+using DoenaSoft.MediaInfoHelper.Helpers;
+
+// Implement your own subtitle extension provider
+public class CustomSubtitleProvider : ISubtitleExtensionProvider
+{
+    public IEnumerable<string> GetSubtitleExtensions()
+    {
+        // Return the subtitle formats you want to support
+        return new[] { "srt", "vtt", "ass" };
+    }
+}
+
+// Configure at application startup
+MediaInfoConfiguration.SubtitleExtensionProvider = new CustomSubtitleProvider();
+```
+
+## Customization
+
+### Language Provider
+
+The library includes a default language provider that standardizes common language codes:
+- German (de, deu, ger -> de)
+- English (en, eng -> en)
+- Arabic (ar, ara -> ar)
+- Spanish (es, spa -> es)
+- Japanese (ja, jap, jpn -> ja)
+- Korean (ko, kor -> ko)
+
+You can implement `ILanguageProvider` to define your own language handling logic.
+
+### Subtitle Extension Provider
+
+The library includes a default subtitle extension provider that supports:
+- srt (SubRip Text)
+- sub (MicroDVD / Sub Station Alpha)
+- sup (Blu-ray PGS)
+- idx (VobSub index)
+- ass (Advanced SubStation Alpha)
+- ssa (Sub Station Alpha)
+- vtt (WebVTT)
+
+You can implement `ISubtitleExtensionProvider` to customize which subtitle formats are detected.
+
+For detailed documentation on customization, see:
+- LANGUAGE_CUSTOMIZATION.md
+- SUBTITLE_CUSTOMIZATION.md
+- LANGUAGE_PROVIDER_QUICKREF.md
 
 ## Data Objects
 
