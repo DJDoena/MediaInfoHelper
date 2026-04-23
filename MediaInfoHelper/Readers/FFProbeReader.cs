@@ -3,7 +3,7 @@ using DoenaSoft.ToolBox.Generics;
 using FfpXml = DoenaSoft.MediaInfoHelper.DataObjects.FFProbeMetaXml;
 using NR = global::NReco.VideoInfo;
 
-namespace DoenaSoft.MediaInfoHelper.Reader;
+namespace DoenaSoft.MediaInfoHelper.Readers;
 
 /// <summary>
 /// Reads FFProbe metadata from video and subtitle files.
